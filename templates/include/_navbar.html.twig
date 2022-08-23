@@ -1,30 +1,78 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Logo BrainGames</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="#">Accueil</a>
-        <a class="nav-link" href="#">Présentation</a>
-        <a class="nav-link" href="#">Adulte</a>
-        <a class="nav-link" href="#">Enfant</a>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Catégories
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="#">Jeux 3D</a></li>
-            <li><a class="dropdown-item" href="#">Jeux en bois</a></li>
-            <li><a class="dropdown-item" href="#">Jeux en métal</a></li>
-            <li><a class="dropdown-item" href="#">Coffrets</a></li>
-            <li><a class="dropdown-item" href="#">Puzzles</a></li>
-          </ul>
-        </li>
-        <a class="nav-link" href="#">Discussions</a>
-        <a class="nav-link" href="#">Connexion</a>
-      </div>
-    </div>
-  </div>
+	<div class="container-fluid">
+		<a class="navbar-brand" href="#">Logo BrainGames</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+			<div class="navbar-nav">
+				<a class="nav-link active" aria-current="page" href="home">Accueil</a>
+				<a class="nav-link" href="presentation">Présentation</a>
+				<a class="nav-link" href="adulte">Adulte</a>
+				<a class="nav-link" href="enfant">Enfant</a>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						Catégories
+					</a>
+					<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<li>
+							<a class="dropdown-item" href="categorie">Jeux 3D</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="categorie">Jeux en bois</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="categorie">Jeux en métal</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="categorie">Coffrets</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="categorie">Puzzles</a>
+						</li>
+					</ul>
+				</li>
+
+				{% if app.user %}
+					{% if is_granted('ROLE_ADMIN') %}
+						<a class="nav-link" href="echange">Echanges</a>
+					{% else %}
+						<a class="nav-link" href="echange">Echanges</a>
+					{% endif %}
+				{% endif %}
+
+				<a class="nav-link me-5" href="discussion">Discussions</a>
+
+				{% if app.user %}
+					<div class="d-inline-flex">
+
+						<a class="nav-link fs-6 text-black-50" title="Votre Profil" href="profil">{{app.user.email}}</a>
+						{# <label class="mt-2 fs-6 text-black-50">{{app.user.email}}</label> #}
+						{% if is_granted('ROLE_ADMIN') %}
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									Administration
+								</a>
+								<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+									<li>
+										<a class="dropdown-item" href="messages">Messages</a>
+									</li>
+									<li>
+										<a class="dropdown-item" href="utilisateurs">Utilisateurs</a>
+									</li>
+									<li>
+										<a class="dropdown-item" href="logoutgit">Déconnexion</a>
+									</li>
+								</ul>
+							</li>
+						{% else %}
+							<a class="nav-link mx-2" href="logout">Déconnexion</a>
+						{% endif %}
+					</div>
+				{% else %}
+					<a class="nav-link" href="login">Connexion</a>
+				{% endif %}
+			</div>
+		</div>
+	</div>
 </nav>
