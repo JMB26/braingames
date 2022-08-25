@@ -61,7 +61,10 @@
 										<a class="dropdown-item" href="utilisateurs">Utilisateurs</a>
 									</li>
 									<li>
-										<a class="dropdown-item" href="logoutgit">Déconnexion</a>
+										<a class="dropdown-item" href="produits">Produits</a>
+									</li>
+									<li>
+										<a class="dropdown-item" href="logout">Déconnexion</a>
 									</li>
 								</ul>
 							</li>
@@ -72,6 +75,12 @@
 				{% else %}
 					<a class="nav-link" href="login">Connexion</a>
 				{% endif %}
+
+				  <form class="d-flex">
+					<input class="form-control me-2" type="search" placeholder="Votre recherche" aria-label="Search">
+					{# <img class="" src="assets/img/search-logo.jpg" alt="recherche"> #}
+					<button class="btn " type="submit"><img class="" src="assets/img/search-logo.jpg" alt="recherche"></button>
+				</form>
 			</div>
 		</div>
 	</div>
