@@ -6,20 +6,73 @@
 {% block body %}
 	<div class="container">
 		<div class="row justify-content-center">
-			<div class="col-6">
-				<h1>Accueil liste des jeux...</h1>
+			<div class="col-5">
+				<h1>Liste des jeux à échanger...</h1>
 			</div>
 
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th scope="col" class="fdtitre"></th>
+						<th scope="col" class="fdtitre">Marque</th>
+						<th scope="col" class="fdtitre">Modèle</th>
+						<th scope="col" class="fdtitre">Catégorie</th>
+						<th scope="col" class="fdtitre">Descriptif</th>
+						<th scope="col" class="fdtitre">Etat</th>
+						<th scope="col" class="fdtitre">Age</th>
+						<th scope="col" class="fdtitre">Echange</th>
+					</tr>
+				</thead>
 
-			 <div class="d-flex flex-row justify-content-center mt-3 ">             
-            <div class="col-1 coltitre">#</div>
-            <div class="col-1 coltitre">Picture</div>
-            <div class="col-1 coltitre">Modele</div>
-            <div class="col-1 coltitre">Catégorie</div>
-            <div class="col-3 coltitre">Descriptif</div>
-            <div class="col-1 coltitre">Age</div>
-            <div class="col-1 coltitre">Disponiblité</div>         
-        </div>   
+				<tbody>
+					<tr>
+						<th scope="row">
+							<a class="nav-link fs-6 text-black-50" title="Proposer aussi le votre ?" href="newgame"><img src="{{asset('images-test/kt-2.jpg') }}" alt=""></a>
+						</th>
+						<td>Falcon</td>
+						<td>Parisis</td>
+						<td>Jeu en bois</td>
+						<td><a class="nav-link fs-6 text-black-50" title="Voir le descriptif complet de ce jeu ?" href="detail">Obcaecati, quo neque nostrum quibusdam nam aspernatur...</a></td>
+						<td>Très bon</td>
+						<td>+ de 18 ans</td>
+						<td>
+							<a class="nav-link fs-6 text-black-50" title="Proposer un échange ?" href="echange">Disponible</a>
+							<a class="nav-link fs-6 text-black-50" title="des questions sur ce jeu ?" href="contact">Contact</a>
+						</td>
+
+
+					</tr>
+					<tr>
+						<th scope="row">
+							<a class="nav-link fs-6 text-black-50" title="Proposer aussi le votre ?" href="newgame"><img src="{{asset('images-test/kt-3.jpg') }}" alt=""></a>
+						</th>
+						<td>Torsen</td>
+						<td>Berlis</td>
+						<td>Jeu en plastique</td>
+						<td><a class="nav-link fs-6 text-black-50" title="Voir le descriptif complet de ce jeu ?" href="detail">Lorem ipsum dolor sit amet consectetur adipisicing elit...</a></td>
+						<td>Bon</td>
+						<td>+ de 8 ans</td>
+
+						<td>
+							<a class="nav-link fs-6 text-black-50" title="Proposer un échange ?" href="echange">Disponible</a>
+							<a class="nav-link fs-6 text-black-50" title="des questions sur ce jeu ?" href="contact">Contact</a>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><img src="{{asset('images-test/kt-4.jpg') }}" alt=""></th>
+						<td>Jumbo</td>
+						<td>Londis</td>
+						<td>Jeu en Metal</td>
+						<td><a class="nav-link fs-6 text-black-50" title="Voir le descriptif complet de ce jeu ?" href="detail">consectetur adipisicing elit neque nostrum quibusdam nam aspernatur...</a></td>
+						<td>Neuf</td>
+						<td>+ de 12 ans</td>
+						<td>
+							<a class="nav-link fs-6 text-black-50" title="Echanger le votre ?" href="newswap">Non disponible</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
 
 		</div>
 	</div>

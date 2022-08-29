@@ -6,15 +6,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class MessagesController extends AbstractController
+class NewgameController extends AbstractController
 {
     /**
-     * @Route("/messages", name="app_messages")
+     * @Route("/newgame", name="app_newgame")
      */
     public function index(): Response
     {
-        return $this->render('messages/index.html.twig', [
-            'controller_name' => 'MessagesController',
+        return $this->render('newgame/index.html.twig', [
+            'controller_name' => 'NewgameController',
         ]);
     }
 }

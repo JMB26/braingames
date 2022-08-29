@@ -5,49 +5,50 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+
 			<div class="navbar-nav">
-				<a class="nav-link active" aria-current="page" href="home">Accueil</a>
-				<a class="nav-link" href="presentation">Présentation</a>
-				<a class="nav-link" href="adulte">Adulte</a>
-				<a class="nav-link" href="enfant">Enfant</a>
+				<a class="nav-link active" aria-current="page" href="{{path('app_home')}}">Accueil</a>
+				<a class="nav-link" href="{{path('app_presentation')}}">Présentation</a>
+				<a class="nav-link" href="{{path('app_adulte')}}">Adulte</a>
+				<a class="nav-link" href="{{path('app_enfant')}}">Enfant</a>
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 						Catégories
 					</a>
 					<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 						<li>
-							<a class="dropdown-item" href="categorie">Jeux 3D</a>
+							<a class="dropdown-item" href="{{path('app_categorie')}}">Jeux 3D</a>
 						</li>
 						<li>
-							<a class="dropdown-item" href="categorie">Jeux en bois</a>
+							<a class="dropdown-item" href="{{path('app_categorie')}}">Jeux en bois</a>
 						</li>
 						<li>
-							<a class="dropdown-item" href="categorie">Jeux en métal</a>
+							<a class="dropdown-item" href="{{path('app_categorie')}}">Jeux en métal</a>
 						</li>
 						<li>
-							<a class="dropdown-item" href="categorie">Coffrets</a>
+							<a class="dropdown-item" href="{{path('app_categorie')}}">Coffrets</a>
 						</li>
 						<li>
-							<a class="dropdown-item" href="categorie">Puzzles</a>
+							<a class="dropdown-item" href="{{path('app_categorie')}}">Puzzles</a>
 						</li>
 					</ul>
 				</li>
 
 				{% if app.user %}
 					{% if is_granted('ROLE_ADMIN') %}
-						<a class="nav-link" href="echange">Echanges</a>
+						<a class="nav-link" href="{{path('app_echange')}}">Echanges</a>
 					{% else %}
-						<a class="nav-link" href="echange">Echanges</a>
+						<a class="nav-link" href="{{path('app_echange')}}">Echanges</a>
 					{% endif %}
 				{% endif %}
 
-				<a class="nav-link me-5" href="discussion">Discussions</a>
+				<a class="nav-link" href="{{path('app_discussion')}}">Discussions</a>
 
 				{% if app.user %}
 					<div class="d-inline-flex">
 
-						<a class="nav-link fs-6 text-black-50" title="Votre Profil" href="profil">{{app.user.email}}</a>
-						{# <label class="mt-2 fs-6 text-black-50">{{app.user.email}}</label> #}
+						<a class="nav-link fs-6 text-black-50" title="Votre Profil" href="{{path('app_profil')}}">{{app.user.email}}</a>
+
 						{% if is_granted('ROLE_ADMIN') %}
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -55,31 +56,37 @@
 								</a>
 								<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 									<li>
-										<a class="dropdown-item" href="messages">Messages</a>
+										<a class="dropdown-item" href="{{path('app_messages')}}">Messages</a>
 									</li>
 									<li>
-										<a class="dropdown-item" href="utilisateurs">Utilisateurs</a>
+										<a class="dropdown-item" href="{{path('app_utilisateurs')}}">Utilisateurs</a>
 									</li>
 									<li>
-										<a class="dropdown-item" href="produits">Produits</a>
+										<a class="dropdown-item" href="{{path('app_games_index')}}">Produits</a>
 									</li>
 									<li>
-										<a class="dropdown-item" href="logout">Déconnexion</a>
+										<a class="dropdown-item" href="{{path('app_categories_index')}}">Categories</a>
+									</li>
+									<li>
+										<a class="dropdown-item" href="{{path('app_shape_index')}}">Etats</a>
+									</li>
+
+									<li>
+										<a class="dropdown-item" href="{{path('app_logout')}}">Déconnexion</a>
 									</li>
 								</ul>
 							</li>
 						{% else %}
-							<a class="nav-link mx-2" href="logout">Déconnexion</a>
+							<a class="nav-link mx-2" href="{{path('app_logout')}}">Déconnexion</a>
 						{% endif %}
 					</div>
 				{% else %}
-					<a class="nav-link" href="login">Connexion</a>
+					<a class="nav-link" href="{{path('app_login')}}">Connexion</a>
 				{% endif %}
 
-				  <form class="d-flex">
+				<form method="post" action="{{ path('app_search')}}" class="d-flex">
 					<input class="form-control me-2" type="search" placeholder="Votre recherche" aria-label="Search">
-					{# <img class="" src="assets/img/search-logo.jpg" alt="recherche"> #}
-					<button class="btn " type="submit"><img class="" src="assets/img/search-logo.jpg" alt="recherche"></button>
+					<button class="btn" type="submit"><img class="" src="{{asset('assets/img/search-logo.jpg') }}" alt="recherche"></button>
 				</form>
 			</div>
 		</div>

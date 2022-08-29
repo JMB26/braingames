@@ -1,13 +1,80 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des échanges{% endblock %}
+{% block title %}Liste des échanges
+{% endblock %}
 
 {% block body %}
-<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-6">
-				<h1>Liste des échanges...</h1>
+	<div class="container">
+		<div class="d-flex flex-row justify-content-between">
+			<div class="col-5">
+				<h1>Liste de vos jeux à échanger...</h1>
+			</div>
+			<div class="col-2">
+				<h3>
+					<a class="nav-link fs-6 text-black-50" title="Echanger le votre ?" href="newgame">Ajouter un nouveau jeu</a>
+				</h3>
 			</div>
 		</div>
 	</div>
-{% endblock %}
+
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th scope="col" class="fdtitre"></th>
+				<th scope="col" class="fdtitre">Marque</th>
+				<th scope="col" class="fdtitre">Modèle</th>
+				<th scope="col" class="fdtitre">Catégorie</th>
+				<th scope="col" class="fdtitre">Descriptif</th>
+				<th scope="col" class="fdtitre">Etat</th>
+				<th scope="col" class="fdtitre">Age</th>
+				<th scope="col" class="fdtitre">Date</th>
+				<th scope="col" class="fdtitre">Status</th>
+
+
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr>
+				<th scope="row"><img src="{{asset('images-test/kt-2.jpg') }}" alt=""></th>
+				<td>Falcon</td>
+				<td>Parisis</td>
+				<td>Jeu en bois</td>
+				<td>Obcaecati, quo neque nostrum quibusdam nam aspernatur...</td>				
+				<td>Neuf</td>
+				<td>+ de 18 ans</td>
+				<td>20/08/2022</td>
+				<td>
+					<a class="nav-link fs-6 text-black-50" title="Proposer ce jeu en échange ?" href="newdeal">En attente d'échange</a>
+				</td>
+			</tr>
+		</tbody>
+	</td>
+</tr>
+<tr>
+	<th scope="row"><img src="{{asset('images-test/kt-3.jpg') }}" alt=""></th>
+	<td>Torsen</td>
+	<td>Berlis</td>
+	<td>Jeu en plastique</td>
+	<td>Lorem ipsum dolor sit amet consectetur adipisicing elit...</td>
+	<td>Bon</td>
+	<td>+ de 8 ans</td>
+	<td>20/07/2022</td>
+	<td>
+		<a class="nav-link fs-6 text-black-50" title="Proposer ce jeu en échange ?" href="newdeal">En attente d'échange</a>
+	</td>
+</tr>
+<tr>
+	<th scope="row"><img src="{{asset('images-test/kt-4.jpg') }}" alt=""></th>
+	<td>Jumbo</td>
+	<td>Londis</td>
+	<td>Jeu en Metal</td>
+	<td>consectetur adipisicing elit neque nostrum quibusdam nam aspernatur...</td>
+	<td>Très bon</td>
+	<td>+ de 12 ans</td>
+	<td>20/06/2022</td>
+	<td>
+		<a class="nav-link fs-6 text-black-50" title="Voir le détail ?" href="">Echange réalisé</a>
+	</td>
+	
+</tr></tbody></table></div>{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Shape{% endblock %}
+
+{% block body %}
+    <h1>Edit Shape</h1>
+
+    {{ include('shape/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_shape_index') }}">back to list</a>
+
+    {{ include('shape/_delete_form.html.twig') }}
+{% endblock %}

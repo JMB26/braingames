@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DetailController!
+{% endblock %}
+
+{% block body %}
+	<div class="row justify-content-center">
+		<div class="fs-2 col-5 text-center">
+			Détail du jeu...
+		</div>
+	</div>
+	<div class="item">
+		<div class="art-1">
+			<div class="phot-4">
+				<img class="phot-1" src="{{asset('images-test/kt-7-0.jpg') }}" alt="">
+			</div>
+
+			<div class="phot-5">
+				<img src="{{asset('images-test/kt-7-0.jpg') }}" alt="" class="vign">
+				<img src="{{asset('images-test/kt-7-1.jpg') }}" alt="" class="vign">
+				<img src="{{asset('images-test/kt-7-2.jpg') }}" alt="" class="vign">
+			</div>
+		</div>
+
+		<div class="art-2">
+
+			<h4>MARQUE</h4>
+			<h1>Nom du Jeu</h1>
+			<p class="txt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse blanditiis illum velit architecto fugit molestias eveniet atque, dolores tenetur tempora, illo voluptates ratione accusantium ducimus est perferendis sed doloribus excepturi!</p>
+
+			<div class="sold">
+				<p class="price">Etat: Neuf</p>
+
+			</div>
+
+			<div class="achat">
+				<div class="addtocart">
+					<img src="images/icon-cart-white.svg" alt="">
+					<a href="echange">Envoyer un message</a>
+				</div>
+
+				<div class="addtocart">
+					<img src="images/icon-cart-white.svg" alt="">
+					<a href="echange">Proposer un échange</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

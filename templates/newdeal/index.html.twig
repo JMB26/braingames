@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello NewdealController!
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="fs-2 col-6 text-center m-3">
+				Proposer un échange de ce jeu ou...
+			</div>
+			<div class="fs-2 col-6 text-center m-3">
+				<button type="button" class="d-grid btn btn-outline-success mx-auto">Selectionner un autre jeu</button>
+			</div>
+		</div>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col" class="fdtitre"></th>
+					<th scope="col" class="fdtitre">Marque</th>
+					<th scope="col" class="fdtitre">Modèle</th>
+					<th scope="col" class="fdtitre">Catégorie</th>
+					<th scope="col" class="fdtitre">Descriptif</th>
+					<th scope="col" class="fdtitre">Etat</th>
+					<th scope="col" class="fdtitre">Age</th>
+					<th scope="col" class="fdtitre">Status</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr>
+					<td><img src="{{asset('images-test/kt-2.jpg') }}" alt=""></td>
+					<td>Falcon</td>
+					<td>Parisis</td>
+					<td>Jeu en bois</td>
+					<td>Obcaecati, quo neque nostrum quibusdam nam aspernatur...</td>
+					<td>Très bon</td>
+					<td>+ de 18 ans</td>
+					
+					<td>En attente d'échange</td>
+				</tr>
+
+				<tr>
+					<th scope="col" colspan="1" class="fs-3 text-center"><img src="{{asset('assets/img/swap-icon-2.jpg') }}" alt=""></th>					
+					<th scope="col" colspan="6" class="fs-3 text-center">Avec le votre.</th>
+					<th scope="col" colspan="1" class="fs-3 text-center"><img src="{{asset('assets/img/swap-icon-1.jpg') }}" alt=""></th>
+				</tr>
+
+				<tr>
+					<td><img src="{{asset('images-test/kt-4.jpg') }}" alt=""></td>
+					<td>Jumbo</td>
+					<td>Londis</td>
+					<td>Jeu en Metal</td>
+					<td>consectetur adipisicing elit neque nostrum quibusdam nam aspernatur...</td>
+					<td>Neuf</td>
+					<td>+ de 12 ans</td>
+					<td>En attente d'échange</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<button type="button" class="d-grid btn btn-success mx-auto">Envoyer la proposition</button>
+
+
+	</div>
+{% endblock %}
