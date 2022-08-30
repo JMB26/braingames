@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 29 août 2022 à 15:14
+-- Généré le : mar. 30 août 2022 à 13:15
 -- Version du serveur : 8.0.27
 -- Version de PHP : 7.4.26
 
@@ -82,7 +82,15 @@ CREATE TABLE IF NOT EXISTS `games` (
   `date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_FF232B31821004EF` (`idcat_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `games`
+--
+
+INSERT INTO `games` (`id`, `mark`, `nom`, `isbn`, `age`, `idcat_id`, `img`, `txt`, `note`, `status`, `date`) VALUES
+(1, 'Ravensburger', 'Utopia', 123456, 15, 1, 'kt-5.jpg', 'New York, Rio, Tokyo - que diriez-vous de reconstituer en puzzle le plan de votre ville, de votre destination de vacances ou de la ville de vos rêves ? Avec MAPuzzle, vous pouvez faire imprimer n\'importe quelle section de carte sous forme de puzzle. Voyagez dans le monde entier depuis chez vous grâce à my Ravensburger puzzle plan urbain : Panama, Paris ou vos montagnes natales, vous pouvez découvrir chaque lieu, chaque ville et chaque recoin de ce monde à travers un puzzle Ravensburger. Pour afficher à la maison ou au bureau ou pour offrir un cadeau original : un puzzle plan urbain personnalisé représente toujours une magnifique idée de décoration !', 0, 0, '2022-08-30 00:00:00'),
+(2, 'Ravensburger', 'Nevergame', 123456789, 10, 1, '630e07fad54be.jpg', 'Qingdewan Puzzle 1000 Pièces Puzzle en Bois DIY Résumé du Paysage des Quatre Saisons Jeu D\'Intelligence De l\'art De La Décoration Moderne Jeu Cadeau Unique', 0, 0, '2022-07-31 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -198,7 +206,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `pseudo` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `typname` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `typname` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `note` int NOT NULL,
   `news` tinyint(1) NOT NULL,
   `token` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -213,8 +221,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id`, `email`, `roles`, `password`, `pseudo`, `type`, `typname`, `note`, `news`, `token`, `date`, `status`) VALUES
-(1, 'user@brain-games.fr', '[]', '$2y$13$MMtVvcGv3XgNwaC5fjtLAuZ1a7woeRhrqAPPT5Erkts35KU/rTC2q', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 0),
-(2, 'admin@brain-games.fr', '[\"ROLE_ADMIN\"]', '$2y$13$33s8BrjxAPwoauNhsg8zEOTow9tcgaW4rur2K605CBe388LLucEBW', '', '', '', 0, 0, '', '0000-00-00 00:00:00', 0);
+(1, 'user@brain-games.fr', '[]', '$2y$13$MMtVvcGv3XgNwaC5fjtLAuZ1a7woeRhrqAPPT5Erkts35KU/rTC2q', 'John', 'particulier', '', 0, 0, '', '2022-08-26 10:41:17', 0),
+(2, 'admin@brain-games.fr', '[\"ROLE_ADMIN\"]', '$2y$13$33s8BrjxAPwoauNhsg8zEOTow9tcgaW4rur2K605CBe388LLucEBW', '', '', '', 0, 0, '', '2022-08-26 14:01:25', 0);
 
 --
 -- Contraintes pour les tables déchargées
