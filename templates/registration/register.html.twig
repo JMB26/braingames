@@ -7,29 +7,54 @@
 
 	<div class="container">
 		<div class="row justify-content-center">
-			<div class="col-4 p-2">
-				<h1>Register</h1>
+			<div class="fs-2 col-6 text-center m-3">
+				Inscription...
+			</div>
+		</div>
+
+		<div class="row justify-content-center">
+			<div class="fs-6 col-4 text-center m-3">
 
 
 				{{ form_start(registrationForm) }}
-                
-                <div class="d-inline-flex p-2 m-2">
-                <label for="Email" class="p-2">Email</label>
-				{{ form_row(registrationForm.email, {label: ' '}) }}
-                 </div>
-                 <div class="d-inline-flex p-2">
-                 <label for="Email" class="p-2">Mot de Passe</label>
-				{{ form_row(registrationForm.plainPassword, {label: ' '}) }}
-                 </div>
-                <div class="d-inline-flex ">
-                <div class="p-2"><label for="Email" class="p-2">J'accepte les conditions d'utilisation</label></div>
-                <div class="mt-3">{{ form_row(registrationForm.agreeTerms, {label: ' '}) }}</div>
-                 
-				
- </div>
-				<button type="submit" class="btn">Register</button>
-				{{ form_end(registrationForm) }}
+
+				<div class="text-start">
+					<label for="Email">Email</label>
+					{{ form_row(registrationForm.email, {label: ' '}) }}
+				</div>
+
+				<div class="text-start">
+					<label for="Email">Mot de Passe</label>
+					{{ form_row(registrationForm.plainPassword, {label: ' '}) }}
+				</div>
+
+				<div class="text-start">
+					<label for="Pseudo">Pseudo</label>
+					{{ form_row(registrationForm.pseudo, {label: ' '}) }}
+				</div>
+
+				<div class="text-start">
+					<label for="Type">Statut</label>
+					{{ form_row(registrationForm.type, {label: ' '}) }}
+				</div>
+
+				<div class="text-start">
+					<label for="Nom">Nom</label>
+					{{ form_row(registrationForm.typname, {label: ' '}) }}
+				</div>
+
+				<div class="d-flex justify-content-start">
+					<label for="Type">Abonnement à notre Newsletter</label>
+					{{ form_row(registrationForm.news, {label: ' '}) }}
+				</div>
+
+				<div class="d-flex justify-content-start">
+					<label for="Email">J'accepte les conditions d'utilisation</label>
+					{{ form_row(registrationForm.agreeTerms, {label: ' '}) }}
+				</div>
 			</div>
+			<button type="submit" class="btn">S'inscrire</button>
+			{{ form_end(registrationForm) }}
 		</div>
 	</div>
 {% endblock %}

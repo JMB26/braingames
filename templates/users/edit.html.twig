@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit User
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="fs-2 col-6 text-center m-3">
+				Gestion des Utilisateurs...
+			</div>
+		</div>
+
+		<div class="row justify-content-center">
+			<div class="fs-6 col-6 text-center m-3">
+
+				{{ include('users/_form.html.twig', {'button_label': 'ENREGISTER'}) }}
+
+				<a href="{{ path('app_users_index') }}">Retour à la Liste des Utilisateurs</a>
+
+				{{ include('users/_delete_form.html.twig') }}
+			</div>
+		</div>
+	</div>
+{% endblock %}

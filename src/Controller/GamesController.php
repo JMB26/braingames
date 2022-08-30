@@ -35,12 +35,30 @@ class GamesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+        // Ajout image
+            
+            $img = $form->get('img')->getData();
+            
+            if ($img) {
+                // L'image Existe
+                $new_name_img = uniqid() . '.'  . $img->guessExtension();
+            
+                $img->move($this->getParameter('upload_dir'), $new_name_img);            
+                $game->setImg($new_name_img);
+            } else {
+                // Image par default 
+                $game->setImg('defaultImg.png');
+            }
+
+ 
+
+
             $gamesRepository->add($game, true);
 
             return $this->redirectToRoute('app_games_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        
+    //    dd($form);
         return $this->renderForm('games/new.html.twig', [
             'game' => $game,
             'form' => $form,
