@@ -4,11 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Games;
 use App\Form\GamesType;
+use App\Form\GamesTypeMaj;
 use App\Repository\GamesRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/games")
@@ -50,15 +51,11 @@ class GamesController extends AbstractController
                 $game->setImg('defaultImg.png');
             }
 
- 
-
-
             $gamesRepository->add($game, true);
 
             return $this->redirectToRoute('app_games_index', [], Response::HTTP_SEE_OTHER);
         }
-
-    //    dd($form);
+   
         return $this->renderForm('games/new.html.twig', [
             'game' => $game,
             'form' => $form,
@@ -70,7 +67,7 @@ class GamesController extends AbstractController
      */
     public function show(Games $game): Response
     {
-        return $this->render('games/show.html.twig', [
+            return $this->render('games/show.html.twig', [
             'game' => $game,
         ]);
     }
@@ -80,7 +77,7 @@ class GamesController extends AbstractController
      */
     public function edit(Request $request, Games $game, GamesRepository $gamesRepository): Response
     {
-        $form = $this->createForm(GamesType::class, $game);
+        $form = $this->createForm(GamesTypeMaj::class, $game);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -89,7 +86,7 @@ class GamesController extends AbstractController
             return $this->redirectToRoute('app_games_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('games/edit.html.twig', [
+        return $this->renderForm('games/edit.html.twig', [           
             'game' => $game,
             'form' => $form,
         ]);

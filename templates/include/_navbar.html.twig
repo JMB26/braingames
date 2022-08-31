@@ -82,12 +82,10 @@
 					</div>
 				{% else %}
 					<a class="nav-link" href="{{path('app_login')}}">Connexion</a>
-				{% endif %}
+				{% endif %}				
 
-				<form method="post" action="{{ path('app_search')}}" class="d-flex">
-					<input class="form-control me-2" type="search" placeholder="Votre recherche" aria-label="Search">
-					<button class="btn" type="submit"><img class="" src="{{asset('assets/img/search-logo.jpg') }}" alt="recherche"></button>
-				</form>
+				{{ render(controller('App\\Controller\\SearchController::searchBar' )) }}
+
 			</div>
 		</div>
 	</div>

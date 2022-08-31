@@ -39,6 +39,28 @@ class GamesRepository extends ServiceEntityRepository
         }
     }
 
+ // Recherche des jeux par leur nom
+ public function findGamesByName(string $query)
+ {
+     $qb = $this->createQueryBuilder('p');
+     $qb
+         ->where(
+             $qb->expr()->andX(
+                 $qb->expr()->orX(
+                     $qb->expr()->like('p.mark', ':query'),
+                     $qb->expr()->like('p.nom', ':query'),
+                 ),
+                //  $qb->expr()->isNotNull('p.created_at')
+             )
+         )
+         ->setParameter('query', '%' . $query . '%')
+     ;
+     return $qb
+         ->getQuery()
+         ->getResult();
+ }
+ 
+
 //    /**
 //     * @return Games[] Returns an array of Games objects
 //     */

@@ -14,16 +14,16 @@
 		<div class="row justify-content-center">
 			<div class="fs-4 col-12 text-center m-3">
 
-				<table class="table">
+				<table class="table fs-5">
 					<thead>
-						<tr>
-							<th>Id</th>
-							<th>Mark</th>
+						<tr class="text-center">
+							<th>#</th>
+							<th>Marque</th>
 							<th>Nom</th>
 							<th>Isbn</th>
 							<th>Age</th>
-							<th>Img</th>
-							<th>Txt</th>
+							<th>Photo</th>
+							<th>Description</th>
 							<th>Note</th>
 							<th>Status</th>
 							<th>Date</th>
@@ -32,21 +32,27 @@
 					</thead>
 					<tbody>
 						{% for game in games %}
-							<tr>
+							<tr>								
 								<td>{{ game.id }}</td>
 								<td>{{ game.mark }}</td>
 								<td>{{ game.nom }}</td>
 								<td>{{ game.isbn }}</td>
 								<td>{{ game.age }}</td>
-								
-								<td><img src="{{ asset('imagestest/' ~ game.img ) }}" alt="" style="width:100px"></td>
-								<td>{{ game.txt }}</td>
+								<td>
+									{% if game.img is defined and game.img is not null %}
+										<img src="{{ asset('images-test/' ~ game.img ) }}" alt="" style="width:100px">
+									{% else %}
+										<img src="{{ asset('images-test/defaultImg.jpg') }}" alt="" style="width:100px">
+									{% endif %}
+
+								</td>
+								<td>{{ game.txt|u.truncate(15) }}...</td>
 								<td>{{ game.note }}</td>
 								<td>{{ game.status ? 'Yes' : 'No' }}</td>
-								<td>{{ game.date ? game.date|date('Y-m-d H:i:s') : '' }}</td>
-								<td>									
+								<td>{{ game.date ? game.date|date('d-m-Y') : '' }}</td>
+								<td>
 									<a href="{{ path('app_games_edit', {'id': game.id}) }}">Modifier</a>
-                                    <a href="{{ path('app_games_show', {'id': game.id}) }}">Supprimer</a>
+									<a href="{{ path('app_games_show', {'id': game.id}) }}">Supprimer</a>
 								</td>
 							</tr>
 						{% else %}
