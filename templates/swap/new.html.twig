@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Swap{% endblock %}
+
+{% block body %}
+    <h1>Create new Swap</h1>
+
+	<p>Id User = {{game.id}}</p>
+
+
+    <div class="container">
+		<div class="row justify-content-center">
+			<div class="fs-2 col-6 text-center m-3">
+				Ajouter ce jeu à vos echanges...
+			</div>
+		</div>
+
+		<div class="row justify-content-center">
+			<div class="fs-4 col-12 text-center m-3">
+
+				<table class="table fs-5">
+					<thead>
+						<tr class="text-center">
+							<th scope="col" class="fdtitre"></th>
+							<th scope="col" class="fdtitre">Marque</th>
+							<th scope="col" class="fdtitre">Modèle</th>
+							<th scope="col" class="fdtitre">Catégorie</th>
+							<th scope="col" class="fdtitre text-center">Descriptif</th>
+							<th scope="col" class="fdtitre">Etat</th>
+							<th scope="col" class="fdtitre">Age</th>
+						</tr>
+					</thead>
+					<tbody>
+
+
+						<tr>
+							<td>								
+									{% if game.img is defined and game.img is not null %}
+
+										<img src="{{ asset('images-test/' ~ game.img ) }}" alt="" style="width:100px">
+									{% else %}
+										<img src="{{ asset('images-test/defaultImg.jpg') }}" alt="" style="width:100px">
+									{% endif %}
+								</a>
+							</td>
+
+							<td>{{ game.mark }}</td>
+							<td>{{ game.nom }}</td>
+							<td>{{game.idcat.nom}}</td>
+
+							<td>{{ game.txt|u.truncate(15) }}...</td>
+
+							<td>Etat...</td>
+							<td>{{ game.age }}</td>
+
+						</tr>
+
+					</tbody>
+				</table>
+
+				{# <div class="row justify-content-center">
+					<div class="fs-2 col-6 text-center m-3">
+						Précisez l'Etat...
+					</div>
+					<div class="fs-5 col-6 text-center m-3">
+						<select name="shape" id="shape">
+							{% for shape in shapes %}
+								<option value="{{ shape.id }}">{{ shape.etat }}</option>
+							{% endfor %}
+						</select>
+					</div>
+				</div> #}
+
+
+				{# <a href="{{ path('app_games_new') }}">Enregistrer ce Nouvel Echange</a> #}
+
+			</div>
+		</div>
+	</div>
+
+    {{ include('swap/_form.html.twig') }}
+
+    <a href="{{ path('app_swap_index') }}">back to list</a>
+{% endblock %}

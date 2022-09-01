@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Swap index{% endblock %}
+
+{% block body %}
+
+
+    <h1>Swap index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Swapuser</th>
+                <th>Swapbuyer</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for swap in swaps %}
+            <tr>
+                <td>{{ swap.id }}</td>
+                <td>{{ swap.swapuser ? 'Yes' : 'No' }}</td>
+                <td>{{ swap.swapbuyer ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_swap_show', {'id': swap.id}) }}">show</a>
+                    <a href="{{ path('app_swap_edit', {'id': swap.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# <a href="{{ path('app_swap_new') }}">Create new</a> #}
+{% endblock %}

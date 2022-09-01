@@ -33,7 +33,7 @@
 						
 							<tr>
 								<td>
-									<a class="nav-link fs-6 text-black-50" title="Proposer le votre ?" href="{{ path('app_newgame', {'id': game.id}) }}">
+									<a class="nav-link fs-6 text-black-50" title="Proposer le votre ?" href="{{ path('app_swap_new', {'id': game.id}) }}">
 										{% if game.img is defined and game.img is not null %}
 
 											<img src="{{ asset('images-test/' ~ game.img ) }}" alt="" style="width:100px">

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Swap{% endblock %}
+
+{% block body %}
+    <h1>Swap</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ swap.id }}</td>
+            </tr>
+            <tr>
+                <th>Swapuser</th>
+                <td>{{ swap.swapuser ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Swapbuyer</th>
+                <td>{{ swap.swapbuyer ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_swap_index') }}">back to list</a>
+
+    <a href="{{ path('app_swap_edit', {'id': swap.id}) }}">edit</a>
+
+    {{ include('swap/_delete_form.html.twig') }}
+{% endblock %}
