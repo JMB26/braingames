@@ -1,17 +1,15 @@
 <?php
 namespace App\Services;
-
 use App\Entity\User;
 use Symfony\Component\Security\Core\Security;
 
 class Tools
 {
-    private $security;
-
+    private $security;   
+   
     public function __construct(Security $security)
     {
-        $this->security = $security;
-
+        $this->security = $security;  
     }
 
     /**
@@ -22,5 +20,5 @@ class Tools
     public function getUser(){
        return $this->security->getUser();
 
-    }
+    }    
 }

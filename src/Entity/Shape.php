@@ -18,6 +18,7 @@ class Shape
      * @ORM\Column(type="integer")
      */
     private $id;
+    
 
     /**
      * @ORM\Column(type="string", length=15)
@@ -38,6 +39,14 @@ class Shape
     {
         return $this->id;
     }
+
+    // public function setId($id)
+    // {
+    //     $this->id = $id;
+
+    //     return $this;
+    // }
+
 
     public function getEtat(): ?string
     {

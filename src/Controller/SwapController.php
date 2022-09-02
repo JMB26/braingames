@@ -1,20 +1,20 @@
 <?php
 
 namespace App\Controller;
+
+use App\Entity\Shape;
 use App\Entity\Swap;
-use App\Entity\User;
+
 use App\Form\SwapType;
 use App\Services\Tools;
 use App\Repository\SwapRepository;
-use App\Repository\UserRepository;
 use App\Repository\GamesRepository;
 use App\Repository\ShapeRepository;
-use Symfony\Component\VarDumper\Cloner\Data;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\Loader\Configurator\security;
 
 /**
  * @Route("/swap")
@@ -30,35 +30,48 @@ class SwapController extends AbstractController
             'swaps' => $swapRepository->findAll(),            
         ]);
     }
-
   
-
     /**
      * @Route("/new/{id}", name="app_swap_new", methods={"GET", "POST"})
      */
-    public function new($id,Request $request, SwapRepository $swapRepository,GamesRepository $gamesRepository,ShapeRepository $shapeRepository, Tools $tools): Response
+    public function new($id, Request $req, Request $request, SwapRepository $swapRepository,GamesRepository $gamesRepository,ShapeRepository $shapeRepository, Tools $tools, Shape $shape): Response
     {   
         $swap = new Swap();  
-       
+        $shape = new Shape();  
+        
+
         $form = $this->createForm(SwapType::class, $swap);
-        $form->handleRequest($request);    
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+               
+            // dd($id);
+
+            $idshape  = $request->request->get('idshape'); 
+            $shape = $shapeRepository->find($idshape);
+            $swap -> setIdshape($shape); 
+
+            $game = $gamesRepository->find($id);
+            $swap -> setIdgameuser($game); 
             
-            // dd('Save');
-            $swap -> setSwapuser('false'); 
-            $swap -> setSwapbuyer('false'); 
+            $swap -> setSwapuser(false); 
+            $swap -> setSwapbuyer(false); 
                    
             // $user = $tools->getUser()->getId();
-            $user = $tools->getUser();        
-            $swap -> setIduser($user); 
+                  
+            $user = $tools->getUser();
+            $swap -> setIduser($user);
+            
+            $swap -> setIdbuyer(null);
+            $swap -> setIdgamebuyer(null); 
 
+            
             $swapRepository->add($swap, true);
 
             return $this->redirectToRoute('app_swap_index', [], Response::HTTP_SEE_OTHER);
         }
            
-        // dd("Don't Save");
+        dump("Don't Save");
         return $this->renderForm('swap/new.html.twig', [  
             'game' => $gamesRepository->find($id),   
             'shapes' => $shapeRepository->findAll(),                  
