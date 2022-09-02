@@ -36,7 +36,7 @@ class Shape
     }
 
     public function getId(): ?int
-    {
+    {        
         return $this->id;
     }
 
@@ -81,7 +81,7 @@ class Shape
     public function removeSwap(Swap $swap): self
     {
         if ($this->swaps->removeElement($swap)) {
-            // set the owning side to null (unless already changed)
+            // set the owning side to null (unless already changed)            
             if ($swap->getIdshape() === $this) {
                 $swap->setIdshape(null);
             }

@@ -15,7 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class SwapType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
-    {        
+    {           
         $builder
             ->add('swapuser')
             ->add('swapbuyer')           

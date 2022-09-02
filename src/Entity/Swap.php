@@ -129,7 +129,7 @@ class Swap
     }
 
     public function getIdshape(): ?Shape
-    {
+    {        
         return $this->idshape;
     }
 

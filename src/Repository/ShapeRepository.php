@@ -16,13 +16,14 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ShapeRepository extends ServiceEntityRepository
 {
+    
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Shape::class);
     }
 
     public function add(Shape $entity, bool $flush = false): void
-    {
+    {       
         $this->getEntityManager()->persist($entity);
 
         if ($flush) {
@@ -31,7 +32,7 @@ class ShapeRepository extends ServiceEntityRepository
     }
 
     public function remove(Shape $entity, bool $flush = false): void
-    {
+    {        
         $this->getEntityManager()->remove($entity);
 
         if ($flush) {

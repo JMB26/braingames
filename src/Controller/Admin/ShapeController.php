@@ -19,7 +19,7 @@ class ShapeController extends AbstractController
      * @Route("/", name="app_shape_index", methods={"GET"})
      */
     public function index(ShapeRepository $shapeRepository): Response
-    {
+    {        
         return $this->render('shape/index.html.twig', [
             'shapes' => $shapeRepository->findAll(),
         ]);
@@ -29,7 +29,7 @@ class ShapeController extends AbstractController
      * @Route("/new", name="app_shape_new", methods={"GET", "POST"})
      */
     public function new(Request $request, ShapeRepository $shapeRepository): Response
-    {
+    {        
         $shape = new Shape();
         $form = $this->createForm(ShapeType::class, $shape);
         $form->handleRequest($request);
@@ -50,7 +50,7 @@ class ShapeController extends AbstractController
      * @Route("/{id}", name="app_shape_show", methods={"GET"})
      */
     public function show(Shape $shape): Response
-    {
+    {        
         return $this->render('shape/show.html.twig', [
             'shape' => $shape,
         ]);
@@ -60,7 +60,7 @@ class ShapeController extends AbstractController
      * @Route("/{id}/edit", name="app_shape_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Shape $shape, ShapeRepository $shapeRepository): Response
-    {
+    {        
         $form = $this->createForm(ShapeType::class, $shape);
         $form->handleRequest($request);
 

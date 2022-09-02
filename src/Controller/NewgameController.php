@@ -18,6 +18,7 @@ class NewgameController extends AbstractController
     public function index($id,Games $games,GamesRepository $gamesRepository,ShapeRepository $shapeRepository,SwapRepository $swapRepository): Response
     {
 dd($swapRepository);
+
         return $this->render('swap/index.html.twig', [
             'swaps' => $swapRepository->findAll(),   
             'game' => $gamesRepository->find($id),  
