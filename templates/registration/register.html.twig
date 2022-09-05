@@ -24,7 +24,7 @@
 				</div>
 
 				<div class="text-start">
-					<label for="Email">Mot de Passe</label>
+					<label for="Mdp">Mot de Passe</label>
 					{{ form_row(registrationForm.plainPassword, {label: ' '}) }}
 				</div>
 
@@ -34,7 +34,7 @@
 				</div>
 
 				<div class="text-start">
-					<label for="Type">Statut</label>
+					<label for="Statut">Statut</label>
 					{{ form_row(registrationForm.type, {label: ' '}) }}
 				</div>
 
@@ -43,13 +43,24 @@
 					{{ form_row(registrationForm.typname, {label: ' '}) }}
 				</div>
 
+				<div class="text-start">
+					<label for="cpost">Code Postal</label>
+					{{ form_row(registrationForm.cpost, {label: ' '}) }}
+				</div>
+
+				<div class="text-start">
+					<label for="Ville">Ville</label>
+					{{ form_row(registrationForm.ville, {label: ' '}) }}
+				</div>
+
+
 				<div class="d-flex justify-content-start">
-					<label for="Type">Abonnement à notre Newsletter</label>
+					<label for="News">Abonnement à notre Newsletter</label>
 					{{ form_row(registrationForm.news, {label: ' '}) }}
 				</div>
 
 				<div class="d-flex justify-content-start">
-					<label for="Email">J'accepte les conditions d'utilisation</label>
+					<label for="cgu">J'accepte les conditions d'utilisation</label>
 					{{ form_row(registrationForm.agreeTerms, {label: ' '}) }}
 				</div>
 			</div>

@@ -36,26 +36,26 @@ class GamesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-        // Ajout image
-            
+            // Ajout image
+
             $img = $form->get('img')->getData();
-            
+
             if ($img) {
                 // L'image Existe
-                $new_name_img = uniqid() . '.'  . $img->guessExtension();
-            
-                $img->move($this->getParameter('upload_dir'), $new_name_img);            
-                $game->setImg($new_name_img);
+                $new_img = uniqid() . '.'  . $img->guessExtension();
+
+                $img->move($this->getParameter('upload_dir'), $new_img);
+                $game->setImg($new_img);
             } else {
                 // Image par default 
-                $game->setImg('defaultImg.png');
+                $game->setImg('defaultImg.jpg');
             }
 
             $gamesRepository->add($game, true);
 
             return $this->redirectToRoute('app_games_index', [], Response::HTTP_SEE_OTHER);
         }
-   
+
         return $this->renderForm('games/new.html.twig', [
             'game' => $game,
             'form' => $form,
@@ -67,7 +67,7 @@ class GamesController extends AbstractController
      */
     public function show(Games $game): Response
     {
-            return $this->render('games/show.html.twig', [
+        return $this->render('games/show.html.twig', [
             'game' => $game,
         ]);
     }
@@ -77,16 +77,41 @@ class GamesController extends AbstractController
      */
     public function edit(Request $request, Games $game, GamesRepository $gamesRepository): Response
     {
+        $old_name = $game->getImg();
         $form = $this->createForm(GamesTypeMaj::class, $game);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $gamesRepository->add($game, true);
+            // Image actuelle 
+            $img = $form->get('img')->getData();
+            if ($img) {                
+                // Nom unique à la nouvelle image & Envoi -> serveur                 
+                $new_img = uniqid() . '.'  . $img->guessExtension();                
+                $img->move($this->getParameter('upload_dir'), $new_img);
 
+                // Set imgje set l'objet article avec le nouveau nom
+                $game->setImg($new_img);
+
+                // supprimer l'ancienne image si elle existe
+                if (file_exists($old_name)) {
+                    $path = $this->getParameter('upload_dir') . $old_name;                    
+                    unlink($path);                
+                }
+            } else {
+                // si pas d'image dans le form   
+                if (strlen($old_name) < 1) {                      
+                    // on set l'img par défaut                     
+                    $game->setImg('defaultImg.jpg'); 
+                }else{
+                    $game->setImg($old_name); 
+                }
+            }
+
+            $gamesRepository->add($game, true);
             return $this->redirectToRoute('app_games_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('games/edit.html.twig', [           
+        return $this->renderForm('games/edit.html.twig', [
             'game' => $game,
             'form' => $form,
         ]);
@@ -97,7 +122,7 @@ class GamesController extends AbstractController
      */
     public function delete(Request $request, Games $game, GamesRepository $gamesRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$game->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $game->getId(), $request->request->get('_token'))) {
             $gamesRepository->remove($game, true);
         }
 

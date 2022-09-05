@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -17,6 +18,7 @@ class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $date_jour = new DateTime();
         $builder
             ->add('email')
             ->add('agreeTerms', CheckboxType::class, [
@@ -54,7 +56,12 @@ class RegistrationFormType extends AbstractType
                         'Association' => 'Association',
                     ]])        
             ->add('typname')
+
+            // ->add('date')
+           
             ->add('news')
+            ->add('cpost')
+            ->add('ville')
         ;
     }
 

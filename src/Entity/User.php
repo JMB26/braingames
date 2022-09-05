@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -99,12 +100,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $writer;
 
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $ville;
+
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $cpost;
+
     public function __construct()
     {
         $this->swaps = new ArrayCollection();
         $this->swapbuy = new ArrayCollection();
         $this->comments = new ArrayCollection();
-        $this->writer = new ArrayCollection();
+        $this->writer = new ArrayCollection();  
+        $this->date = new \DateTime('now');      
     }
 
     public function getId(): ?int
@@ -408,6 +420,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $writer->setIdwriter(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(string $ville): self
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getCpost(): ?string
+    {
+        return $this->cpost;
+    }
+
+    public function setCpost(string $cpost): self
+    {
+        $this->cpost = $cpost;
 
         return $this;
     }

@@ -12,8 +12,7 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email')
-            // ->add('roles')
+            ->add('email')            
             ->add('password')
             ->add('pseudo')
             ->add('type')
@@ -21,8 +20,10 @@ class UserType extends AbstractType
             ->add('note')
             ->add('news')
             ->add('token')
-            ->add('date')
+            // ->add('date')
             ->add('status')
+            ->add('cpost')
+            ->add('ville')
         ;
     }
 

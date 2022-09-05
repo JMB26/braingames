@@ -19,6 +19,5 @@ class Tools
      */
     public function getUser(){
        return $this->security->getUser();
-
     }    
 }

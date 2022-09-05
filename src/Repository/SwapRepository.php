@@ -39,6 +39,39 @@ class SwapRepository extends ServiceEntityRepository
         }
     }
 
+   /**
+    * @return Swap[] Returns an array of Swap objects by User
+    */
+   public function findByUser($value): array
+   {
+    // dd($value);
+       return $this->createQueryBuilder('s')
+           ->andWhere('s.iduser = :val')
+           ->setParameter('val', $value)
+           ->orderBy('s.id', 'ASC')
+           ->setMaxResults(10)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+
+/**
+    * @return Swap[] Returns an array of Swap objects by Game
+    */
+    public function findByGame($value): array
+    {
+     // dd($value);
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.idgameuser = :val')
+            ->setParameter('val', $value)
+            ->orderBy('s.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
 //    /**
 //     * @return Swap[] Returns an array of Swap objects
 //     */

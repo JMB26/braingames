@@ -1,41 +1,70 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Swap index{% endblock %}
+{% block title %}Swap index
+{% endblock %}
 
 {% block body %}
 
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="fs-2 col-6 text-center m-3">
+				Liste des Jeux à Echanger...
+			</div>
+		</div>
 
-    <h1>Swap index</h1>
+		<div class="row justify-content-center">
+			<div class="fs-4 col-12 text-center m-3">
 
-{{ dump(swaps)}}
+				<table class="table fs-5">
+					<thead>
+						<tr class="text-center">
+							<th scope="col" class="fdtitre"></th>
+							<th scope="col" class="fdtitre">Marque</th>
+							<th scope="col" class="fdtitre">Modèle</th>
+							<th scope="col" class="fdtitre">Catégorie</th>
+							<th scope="col" class="fdtitre text-center">Descriptif</th>
+							<th scope="col" class="fdtitre">Etat</th>
+							<th scope="col" class="fdtitre">Age</th>
+							<th scope="col" class="fdtitre">Echange</th>
+						</tr>
+					</thead>
+					<tbody>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Swapuser</th>
-                <th>Swapbuyer</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for swap in swaps %}
-            <tr>
-                <td>{{ swap.id }}</td>
-                <td>{{ swap.swapuser ? 'Yes' : 'No' }}</td>
-                <td>{{ swap.swapbuyer ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('app_swap_show', {'id': swap.id}) }}">show</a>
-                    <a href="{{ path('app_swap_edit', {'id': swap.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+						{% set  i = 0 %}
 
-    {# <a href="{{ path('app_swap_new') }}">Create new</a> #}
-{% endblock %}
+						{% if games[0] is not empty %}
+							{% for game in games|reverse%}
+
+								<tr>
+									<td>
+										{% if game['0'].img is defined and game['0'].img is not null %}
+
+											<img src="{{ asset('images-test/' ~ game['0'].img ) }}" alt="" style="width:100px">
+										{% else %}
+											<img src="{{ asset('images-test/defaultImg.jpg') }}" alt="" style="width:100px">
+										{% endif %}
+									</td>
+
+									<td>{{ game['0'].mark }}</td>
+									<td>{{ game['0'].nom }}</td>
+									<td>{{game['0'].idcat.nom}}</td>
+
+									<td>{{ game['0'].txt|u.truncate(15) }}...</td>
+
+									<td>{{ etats[i] }}</td>
+									<td>{{ game['0'].age }}</td>
+
+
+									<td>En attente d'échange</td>
+								</tr>
+								{% set i = i+1 %}
+							{% endfor %}
+						{% else %}
+							<tr>
+								<td colspan="11">Aucun échange trouvé</td>
+							</tr>
+						{% endif %}
+					</tbody>
+				</table>
+
+			{% endblock %}
