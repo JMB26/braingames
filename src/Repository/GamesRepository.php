@@ -3,6 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Games;
+use App\Repository\SwapRepository;
+use App\Entity\Swap;
+use ContainerAoUllF8\getSwapRepositoryService;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -74,29 +77,29 @@ class GamesRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    // SELECT * FROM games left JOIN swap ON games.id = swap.idgameuser_id AND swap.iduser_id = 2 WHERE swap.idgameuser_id is  null;
+    // SELECT * FROM games left JOIN swap ON games.id = swap.idgameuser_id AND swap.iduser_id = $value WHERE swap.idgameuser_id is  null;
 
     /**
      * @return Game[] Returns an array of Game objects by User
      */
     public function findGameByNotUser($value): array
-    {
-        // dd($value);
-        return $this->createQueryBuilder('games')           
-            ->leftJoin('swap', 'sw', 'ON', 'sw.idgameuser = games.id'  )
-            ->andWhere('swap.idgameuser IS NULL')
+    {          
+            return $this->createQueryBuilder('games')   
+            ->addSelect('s')  
+            ->leftJoin('games.swap', 's')
+            ->where('s.idgameuser = :val')            
             ->setParameter('val', $value)
             ->orderBy('games.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()            
-            ->getResult();
-            
-
-        //     ->leftJoin('partner_address', 'pa', 'ON', 'pa.id_partner = p.id')       
-        // ->where('p.dateVFin IS NULL')
+            ->getResult();         
     }
 
-    
+    // ->addSelect('r') 
+    // ->leftJoin('e.relatedEntity', 'r')
+    // ->where('r.foo = :parameter')
+    // ->setParameter('parameter', $parameter)
+    // ->getQuery();
 
     //    /**
     //     * @return Games[] Returns an array of Games objects

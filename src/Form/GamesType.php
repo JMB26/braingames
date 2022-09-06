@@ -35,6 +35,8 @@ class GamesType extends AbstractType
             ->add('idcat' ,EntityType::class,[
                 'class' => Categories::class,
                 'choice_label' => 'nom' ])
+            ->add('cpost')
+            ->add('ville')
         ;
     }
 
