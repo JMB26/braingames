@@ -28,7 +28,7 @@
 							<th>News</th>
 							<th>Token</th>
 							<th>Date</th>
-							<th>Status</th>
+							<th>statut</th>
 							<th>actions</th>
 						</tr>
 					</thead>
@@ -47,9 +47,9 @@
 								<td>{{ user.token }}</td>
 								<td>{{ user.date ? user.date|date('Y-m-d H:i:s') : '' }}</td>
 								<td>{{ user.status ? 'Yes' : 'No' }}</td>
-								<td>									
+								<td>
 									<a href="{{ path('app_users_edit', {'id': user.id}) }}">Modifier</a>
-                                    <a href="{{ path('app_users_delete', {'id': user.id}) }}">Supprimer</a>
+									<a href="{{ path('app_users_delete', {'id': user.id}) }}">Supprimer</a>
 								</td>
 							</tr>
 						{% else %}

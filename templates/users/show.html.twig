@@ -1,66 +1,67 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block title %}User
+{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
+	<h1>User</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
-            <tr>
-                <th>Pseudo</th>
-                <td>{{ user.pseudo }}</td>
-            </tr>
-            <tr>
-                <th>Type</th>
-                <td>{{ user.type }}</td>
-            </tr>
-            <tr>
-                <th>Typname</th>
-                <td>{{ user.typname }}</td>
-            </tr>
-            <tr>
-                <th>Note</th>
-                <td>{{ user.note }}</td>
-            </tr>
-            <tr>
-                <th>News</th>
-                <td>{{ user.news ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Token</th>
-                <td>{{ user.token }}</td>
-            </tr>
-            <tr>
-                <th>Date</th>
-                <td>{{ user.date ? user.date|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{ user.status ? 'Yes' : 'No' }}</td>
-            </tr>
-        </tbody>
-    </table>
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ user.id }}</td>
+			</tr>
+			<tr>
+				<th>Email</th>
+				<td>{{ user.email }}</td>
+			</tr>
+			<tr>
+				<th>Roles</th>
+				<td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+			</tr>
+			<tr>
+				<th>Password</th>
+				<td>{{ user.password }}</td>
+			</tr>
+			<tr>
+				<th>Pseudo</th>
+				<td>{{ user.pseudo }}</td>
+			</tr>
+			<tr>
+				<th>Type</th>
+				<td>{{ user.type }}</td>
+			</tr>
+			<tr>
+				<th>Typname</th>
+				<td>{{ user.typname }}</td>
+			</tr>
+			<tr>
+				<th>Note</th>
+				<td>{{ user.note }}</td>
+			</tr>
+			<tr>
+				<th>News</th>
+				<td>{{ user.news ? 'Yes' : 'No' }}</td>
+			</tr>
+			<tr>
+				<th>Token</th>
+				<td>{{ user.token }}</td>
+			</tr>
+			<tr>
+				<th>Date</th>
+				<td>{{ user.date ? user.date|date('Y-m-d H:i:s') : '' }}</td>
+			</tr>
+			<tr>
+				<th>statut</th>
+				<td>{{ user.status ? 'Yes' : 'No' }}</td>
+			</tr>
+		</tbody>
+	</table>
 
-    <a href="{{ path('app_users_index') }}">back to list</a>
+	<a href="{{ path('app_users_index') }}">back to list</a>
 
-    <a href="{{ path('app_users_edit', {'id': user.id}) }}">edit</a>
+	<a href="{{ path('app_users_edit', {'id': user.id}) }}">edit</a>
 
-    {{ include('users/_delete_form.html.twig') }}
+	{{ include('users/_delete_form.html.twig') }}
 {% endblock %}

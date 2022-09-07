@@ -4,10 +4,25 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container">
-		<div class="d-flex flex-row justify-content-between">
-			<div class="col-5">
-				<h1>Liste de vos jeux à échanger...</h1>
+	{# <div class="container">
+				<div class="d-flex flex-row justify-content-between">
+					<div class="col-5">
+						<h1>Liste de vos jeux à échanger...</h1>
+					</div>
+					<div class="col-2">
+						<h3>
+							<a class="nav-link fs-6 text-black-50" title="Echanger le votre ?" href="newgame">Ajouter un nouveau jeu</a>
+						</h3>
+					</div>
+				</div>
+			</div> #}
+	{{dump(swapbuy)}}
+	{{dump(swapsell)}}
+
+
+		<div class="container"> <div class="row justify-content-center">
+			<div class="fs-2 col-6 text-center m-3">
+				Sélectionner le Jeu à Echanger...
 			</div>
 			<div class="col-2">
 				<h3>
@@ -15,66 +30,73 @@
 				</h3>
 			</div>
 		</div>
+
+		<div class="row justify-content-center">
+			<div class="fs-4 col-12 text-center m-3">
+
+				<table class="table table-hover fs-6">
+					<thead>
+						<tr>
+							<th scope="col" class="fdtitre"></th>
+							<th scope="col" class="fdtitre">Marque</th>
+							<th scope="col" class="fdtitre">Modèle</th>
+							<th scope="col" class="fdtitre">Catégorie</th>
+							<th scope="col" class="fdtitre">Descriptif</th>
+							<th scope="col" class="fdtitre">Etat</th>
+							<th scope="col" class="fdtitre">Age</th>
+							<th scope="col" class="fdtitre">Statut</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						{% set  i = games|length-1 %}
+						{# {% set  i= 0 %} #}
+						                             {# {{dump('len =',q)}} #}
+
+						{% if games[0] is not empty %}
+							{% for game in games|reverse%}
+
+								<tr>
+									<td>
+										{% if game['0'].img is defined and game['0'].img is not null %}
+
+											<img src="{{ asset('images-test/' ~ game['0'].img ) }}" alt="" style="width:100px">
+										{% else %}
+											<img src="{{ asset('images-test/defaultImg.jpg') }}" alt="" style="width:100px">
+										{% endif %}
+									</td>
+
+									<td>{{ game['0'].mark }}</td>
+									<td>{{ game['0'].nom }}</td>
+									<td>{{game['0'].idcat.nom}}</td>
+
+									<td>{{ game['0'].txt|u.truncate(15) }}...</td>
+
+									<td>{{ etats[i] }}</td>
+									<td>{{ game['0'].age }}</td>
+
+
+									<td>
+										<form action="{{ path('app_newdeal')}}" method="POST">
+											<input type="hidden" id="sell" name="sell" value="{{swapsell.id}}">
+											<input type="hidden" id="buy" name="buy" value="{{swapbuy[i].id}}">
+											<input type="hidden" id="gamebuy" name="gamebuy" value="{{game['0'].id}}">											
+											<input type="submit" value="En attente d'échange" title="Proposer ce jeu en échange ?">
+										</form>
+									</td>
+								</tr>
+								{% set i = i-1 %}
+							{% endfor %}
+						{% else %}
+							<tr>
+								<td colspan="11">Aucun échange trouvé</td>
+							</tr>
+						{% endif %}
+
+
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
-{{dump(swap)}}
-	<table class="table table-hover">
-		<thead>
-			<tr>
-				<th scope="col" class="fdtitre"></th>
-				<th scope="col" class="fdtitre">Marque</th>
-				<th scope="col" class="fdtitre">Modèle</th>
-				<th scope="col" class="fdtitre">Catégorie</th>
-				<th scope="col" class="fdtitre">Descriptif</th>
-				<th scope="col" class="fdtitre">Etat</th>
-				<th scope="col" class="fdtitre">Age</th>
-				<th scope="col" class="fdtitre">Date</th>
-				<th scope="col" class="fdtitre">Status</th>
-
-
-			</tr>
-		</thead>
-
-		<tbody>
-			<tr>
-				<th scope="row"><img src="{{asset('images-test/kt-2.jpg') }}" alt=""></th>
-				<td>Falcon</td>
-				<td>Parisis</td>
-				<td>Jeu en bois</td>
-				<td>Obcaecati, quo neque nostrum quibusdam nam aspernatur...</td>				
-				<td>Neuf</td>
-				<td>+ de 18 ans</td>
-				<td>20/08/2022</td>
-				<td>
-					<a class="nav-link fs-6 text-black-50" title="Proposer ce jeu en échange ?" href="newdeal">En attente d'échange</a>
-				</td>
-			</tr>
-		</tbody>
-	</td>
-</tr>
-<tr>
-	<th scope="row"><img src="{{asset('images-test/kt-3.jpg') }}" alt=""></th>
-	<td>Torsen</td>
-	<td>Berlis</td>
-	<td>Jeu en plastique</td>
-	<td>Lorem ipsum dolor sit amet consectetur adipisicing elit...</td>
-	<td>Bon</td>
-	<td>+ de 8 ans</td>
-	<td>20/07/2022</td>
-	<td>
-		<a class="nav-link fs-6 text-black-50" title="Proposer ce jeu en échange ?" href="newdeal">En attente d'échange</a>
-	</td>
-</tr>
-<tr>
-	<th scope="row"><img src="{{asset('images-test/kt-4.jpg') }}" alt=""></th>
-	<td>Jumbo</td>
-	<td>Londis</td>
-	<td>Jeu en Metal</td>
-	<td>consectetur adipisicing elit neque nostrum quibusdam nam aspernatur...</td>
-	<td>Très bon</td>
-	<td>+ de 12 ans</td>
-	<td>20/06/2022</td>
-	<td>
-		<a class="nav-link fs-6 text-black-50" title="Voir le détail ?" href="">Echange réalisé</a>
-	</td>
-	
-</tr></tbody></table></div>{% endblock %}
+{% endblock %}

@@ -79,6 +79,9 @@ class SwapController extends AbstractController
                 $swap->setIdshape($shape);
 
                 $game = $gamesRepository->find($id);
+                
+                dd('Game=',$id, $game);
+
                 $swap->setIdgameuser($game);
 
                 $swap->setSwapuser(false);
@@ -118,7 +121,7 @@ class SwapController extends AbstractController
         ]);
     }
 
-    /**
+    /**    
      * @Route("/{id}/edit", name="app_swap_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Swap $swap, SwapRepository $swapRepository): Response
@@ -134,7 +137,7 @@ class SwapController extends AbstractController
 
         return $this->renderForm('swap/edit.html.twig', [
             'swap' => $swap,
-            'form' => $form,
+            // 'form' => $form,
         ]);
     }
 

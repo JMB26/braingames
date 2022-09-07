@@ -1,58 +1,59 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Games{% endblock %}
+{% block title %}Games
+{% endblock %}
 
 {% block body %}
-    <h1>Games</h1>
+	<h1>Games</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ game.id }}</td>
-            </tr>
-            <tr>
-                <th>Mark</th>
-                <td>{{ game.mark }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ game.nom }}</td>
-            </tr>
-            <tr>
-                <th>Isbn</th>
-                <td>{{ game.isbn }}</td>
-            </tr>
-            <tr>
-                <th>Age</th>
-                <td>{{ game.age }}</td>
-            </tr>
-            <tr>
-                <th>Img</th>
-                <td>{{ game.img }}</td>
-            </tr>
-            <tr>
-                <th>Txt</th>
-                <td>{{ game.txt }}</td>
-            </tr>
-            <tr>
-                <th>Note</th>
-                <td>{{ game.note }}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{ game.status ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Date</th>
-                <td>{{ game.date ? game.date|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ game.id }}</td>
+			</tr>
+			<tr>
+				<th>Mark</th>
+				<td>{{ game.mark }}</td>
+			</tr>
+			<tr>
+				<th>Nom</th>
+				<td>{{ game.nom }}</td>
+			</tr>
+			<tr>
+				<th>Isbn</th>
+				<td>{{ game.isbn }}</td>
+			</tr>
+			<tr>
+				<th>Age</th>
+				<td>{{ game.age }}</td>
+			</tr>
+			<tr>
+				<th>Img</th>
+				<td>{{ game.img }}</td>
+			</tr>
+			<tr>
+				<th>Txt</th>
+				<td>{{ game.txt }}</td>
+			</tr>
+			<tr>
+				<th>Note</th>
+				<td>{{ game.note }}</td>
+			</tr>
+			<tr>
+				<th>statut</th>
+				<td>{{ game.status ? 'Yes' : 'No' }}</td>
+			</tr>
+			<tr>
+				<th>Date</th>
+				<td>{{ game.date ? game.date|date('Y-m-d H:i:s') : '' }}</td>
+			</tr>
+		</tbody>
+	</table>
 
-    <a href="{{ path('app_games_index') }}">back to list</a>
+	<a href="{{ path('app_games_index') }}">back to list</a>
 
-    <a href="{{ path('app_games_edit', {'id': game.id}) }}">edit</a>
+	<a href="{{ path('app_games_edit', {'id': game.id}) }}">edit</a>
 
-    {{ include('games/_delete_form.html.twig') }}
+	{{ include('games/_delete_form.html.twig') }}
 {% endblock %}
