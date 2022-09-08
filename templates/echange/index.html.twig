@@ -75,12 +75,11 @@
 									<td>{{ etats[i] }}</td>
 									<td>{{ game['0'].age }}</td>
 
-
 									<td>
 										<form action="{{ path('app_newdeal')}}" method="POST">
 											<input type="hidden" id="sell" name="sell" value="{{swapsell.id}}">
 											<input type="hidden" id="buy" name="buy" value="{{swapbuy[i].id}}">
-											<input type="hidden" id="gamebuy" name="gamebuy" value="{{game['0'].id}}">											
+											{# <input type="hidden" id="gamebuy" name="gamebuy" value="{{game['0'].id}}">											 #}
 											<input type="submit" value="En attente d'échange" title="Proposer ce jeu en échange ?">
 										</form>
 									</td>

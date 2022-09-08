@@ -4,6 +4,10 @@
 {% endblock %}
 
 {% block body %}
+
+	{{dump(gamesell)}}
+	{{dump(gamebuy)}}
+
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="fs-2 col-6 text-center m-3">
@@ -30,33 +34,59 @@
 
 			<tbody>
 				<tr>
-					<td><img src="{{asset('images-test/kt-2.jpg') }}" alt=""></td>
-					<td>Falcon</td>
-					<td>Parisis</td>
-					<td>Jeu en bois</td>
-					<td>Obcaecati, quo neque nostrum quibusdam nam aspernatur...</td>
-					<td>Très bon</td>
-					<td>+ de 18 ans</td>
-					
-					<td>En attente d'échange</td>
+					<td>
+						{% if gamesell.img is defined and gamesell.img is not null %}
+
+							<img src="{{ asset('images-test/' ~ gamesell.img ) }}" alt="" style="width:100px">
+						{% else %}
+							<img src="{{ asset('images-test/defaultImg.jpg') }}" alt="" style="width:100px">
+						{% endif %}
+					</td>
+
+					<td>{{ gamesell.mark }}</td>
+					<td>{{ gamesell.nom }}</td>
+					<td>{{gamesell.idcat.nom}}</td>
+
+					<td>{{ gamesell.txt|u.truncate(15) }}...</td>
+
+					<td>{{ etatgamesell}}</td>
+					<td>{{ gamesell.age }}</td>
+
+					<td>
+						En attente d'échange
+					</td>
 				</tr>
 
-				<tr>
-					<th scope="col" colspan="1" class="fs-3 text-center"><img src="{{asset('assets/img/swap-icon-2.jpg') }}" alt=""></th>					
+				<tr class= "bg-light">
+					<th scope="col" colspan="1" class="fs-3 text-center"><img src="{{asset('assets/img/swap-icon-2.jpg') }}" alt=""></th>
 					<th scope="col" colspan="6" class="fs-3 text-center">Avec le votre.</th>
 					<th scope="col" colspan="1" class="fs-3 text-center"><img src="{{asset('assets/img/swap-icon-1.jpg') }}" alt=""></th>
 				</tr>
 
 				<tr>
-					<td><img src="{{asset('images-test/kt-4.jpg') }}" alt=""></td>
-					<td>Jumbo</td>
-					<td>Londis</td>
-					<td>Jeu en Metal</td>
-					<td>consectetur adipisicing elit neque nostrum quibusdam nam aspernatur...</td>
-					<td>Neuf</td>
-					<td>+ de 12 ans</td>
-					<td>En attente d'échange</td>
+					<td>
+						{% if gamebuy.img is defined and gamebuy.img is not null %}
+
+							<img src="{{ asset('images-test/' ~ gamebuy.img ) }}" alt="" style="width:100px">
+						{% else %}
+							<img src="{{ asset('images-test/defaultImg.jpg') }}" alt="" style="width:100px">
+						{% endif %}
+					</td>
+
+					<td>{{ gamebuy.mark }}</td>
+					<td>{{ gamebuy.nom }}</td>
+					<td>{{gamebuy.idcat.nom}}</td>
+
+					<td>{{ gamebuy.txt|u.truncate(15) }}...</td>
+
+					<td>{{ etatgamebuy }}</td>
+					<td>{{ gamebuy.age }}</td>
+
+					<td>
+						En attente d'échange
+					</td>
 				</tr>
+
 			</tbody>
 		</table>
 

@@ -53,7 +53,7 @@ class Swap
     private $idbuyer;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Games::class, inversedBy="swaps")
+     * @ORM\ManyToOne(targetEntity=Games::class, inversedBy="swaps", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $idgameuser;
