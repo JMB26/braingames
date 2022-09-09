@@ -4,8 +4,10 @@ namespace App\Controller;
 
 
 use ArrayObject;
+
 use App\Services\Tools;
 use App\Repository\SwapRepository;
+use App\Repository\UserRepository;
 use App\Repository\GamesRepository;
 use App\Repository\ShapeRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +19,7 @@ class EchangeController extends AbstractController
     /**
      * @Route("/echange", name="app_echange")
      */
-    public function index(Tools $tools, GamesRepository $gamesRepository, ShapeRepository $shapeRepository, SwapRepository $swapRepository): Response
+    public function index(Tools $tools, GamesRepository $gamesRepository, ShapeRepository $shapeRepository, SwapRepository $swapRepository, UserRepository $userRepository): Response
     {
         
         $user = $tools->getUser();
@@ -26,6 +28,12 @@ class EchangeController extends AbstractController
             // User connecté...
             $id = htmlspecialchars($_POST['seller']);
             $swapsell = $swapRepository->find($id);
+                     
+            $idgame = $swapsell->getIdgameuser()->getId();
+            $game = $gamesRepository->find($idgame);
+            $etatgame = $swapsell->getidshape()->getetat();
+
+            $selluser = $userRepository->find($swapsell->getIduser()->getId());         
 
             $games = new ArrayObject();
             $etat = [];          
@@ -47,6 +55,9 @@ class EchangeController extends AbstractController
                 'shapes' => $shapeRepository->findAll(),
                 'games' => $games,
                 'etats' => $etat,
+                'etatgame' => $etatgame,               
+                'gamesell' => $game,
+                'selluser' => $selluser
             ]);
         } else {
             // User non Connecté...

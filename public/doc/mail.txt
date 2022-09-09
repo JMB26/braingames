@@ -1,0 +1,1 @@
+Send-MailMessage -To "test@mailhog.com" -From "test@test.com" -Subject "Hello, MailHog Local!" -SmtpServer "localhost" -Port 1025

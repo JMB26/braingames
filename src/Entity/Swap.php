@@ -35,13 +35,13 @@ class Swap
     private $images;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Shape::class, inversedBy="swaps")
+     * @ORM\ManyToOne(targetEntity=Shape::class, inversedBy="swaps", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $idshape;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="swaps")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="swaps", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $iduser;

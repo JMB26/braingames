@@ -5,29 +5,90 @@
 
 {% block body %}
 	{# <div class="container">
-				<div class="d-flex flex-row justify-content-between">
-					<div class="col-5">
-						<h1>Liste de vos jeux à échanger...</h1>
-					</div>
-					<div class="col-2">
-						<h3>
-							<a class="nav-link fs-6 text-black-50" title="Echanger le votre ?" href="newgame">Ajouter un nouveau jeu</a>
-						</h3>
-					</div>
-				</div>
-			</div> #}
-	{{dump(swapbuy)}}
-	{{dump(swapsell)}}
+										<div class="d-flex flex-row justify-content-between">
+											<div class="col-5">
+												<h1>Liste de vos jeux à échanger...</h1>
+											</div>
+											<div class="col-2">
+												<h3>
+													<a class="nav-link fs-6 text-black-50" title="Echanger le votre ?" href="newgame">Ajouter un nouveau jeu</a>
+												</h3>
+											</div>
+										</div>
+									</div> #}
+	{# {{dump(selluser)}} #}
 
 
-		<div class="container"> <div class="row justify-content-center">
-			<div class="fs-2 col-6 text-center m-3">
-				Sélectionner le Jeu à Echanger...
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="fs-2 text-center m-3">
+				Proposez un échange ?
 			</div>
-			<div class="col-2">
-				<h3>
-					<a class="nav-link fs-6 text-black-50" title="Echanger le votre ?" href="newgame">Ajouter un nouveau jeu</a>
-				</h3>
+		</div>
+		<div class="row justify-content-center">
+			<div class="fs-4 col-12 text-center m-3">
+
+				<table class="table table-hover fs-6">
+					<thead>
+						<tr>
+							<th scope="col" class="fdtitre"></th>
+							<th scope="col" class="fdtitre">Marque</th>
+							<th scope="col" class="fdtitre">Modèle</th>
+							<th scope="col" class="fdtitre">Catégorie</th>
+							<th scope="col" class="fdtitre">Descriptif</th>
+							<th scope="col" class="fdtitre">Etat</th>
+							<th scope="col" class="fdtitre">Age</th>
+							<th scope="col" class="fdtitre">Statut</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr>
+							<td>
+								{% if gamesell.img is defined and gamesell.img is not null %}
+
+									<img src="{{ asset('images-test/' ~ gamesell.img ) }}" alt="" style="width:100px">
+								{% else %}
+									<img src="{{ asset('images-test/defaultImg.jpg') }}" alt="" style="width:100px">
+								{% endif %}
+							</td>
+
+							<td>{{ gamesell.mark }}</td>
+							<td>{{ gamesell.nom }}</td>
+							<td>{{gamesell.idcat.nom}}</td>
+
+							<td>{{ gamesell.txt|u.truncate(15) }}...</td>
+
+							<td>{{ etatgame}}</td>
+							<td>{{ gamesell.age }}</td>
+
+							<td>
+								<div>
+									En attente d'échange
+								</div>
+								<div>
+									{{ selluser.cpost}}
+									{{ selluser.ville}}
+								</div>
+								<div>
+									<form action="{{ path('app_contact')}}" method="POST">
+										<input type="hidden" id="seller" name="seller" value="{{swapsell.id}}">
+										<input class="fs-6" type="submit" value="Contact" title="Une question à propos de ce jeu ?">
+									</form>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="row justify-content-center">
+			<div class="fs-2 text-center">
+				Avec l'un de vos jeux ?
+			</div>
+			<div class="fs-2 text-center">
+				<a class="fs-6 text-black-50" title="Echanger le votre ?" href="newgame">Ajouter un nouveau jeu</a>
 			</div>
 		</div>
 
@@ -51,14 +112,14 @@
 					<tbody>
 						{% set  i = games|length-1 %}
 						{# {% set  i= 0 %} #}
-						                             {# {{dump('len =',q)}} #}
+						{# {{dump('len =',q)}} #}
 
-						{% if games[0] is not empty %}
-							{% for game in games|reverse%}
+							{% if games[0] is not empty %}
+								{% for game in games|reverse%}
 
-								<tr>
-									<td>
-										{% if game['0'].img is defined and game['0'].img is not null %}
+									<tr>
+										<td>
+											{% if game['0'].img is defined and game['0'].img is not null %}
 
 											<img src="{{ asset('images-test/' ~ game['0'].img ) }}" alt="" style="width:100px">
 										{% else %}
@@ -78,7 +139,8 @@
 									<td>
 										<form action="{{ path('app_newdeal')}}" method="POST">
 											<input type="hidden" id="sell" name="sell" value="{{swapsell.id}}">
-											<input type="hidden" id="buy" name="buy" value="{{swapbuy[i].id}}">
+											<input
+											type="hidden" id="buy" name="buy" value="{{swapbuy[i].id}}">
 											{# <input type="hidden" id="gamebuy" name="gamebuy" value="{{game['0'].id}}">											 #}
 											<input type="submit" value="En attente d'échange" title="Proposer ce jeu en échange ?">
 										</form>
