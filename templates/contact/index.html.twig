@@ -34,17 +34,33 @@
 
 					<tbody>
 						<tr>
-							<th scope="row">
-								<a class="nav-link fs-6 text-black-50" title="Proposer aussi le votre ?" href="newgame"><img src="{{asset('images-test/kt-2.jpg') }}" alt="" style="width:100px"></a>
-							</th>
-							<td>Falcon</td>
-							<td>Parisis</td>
-							<td>Jeu en bois</td>
-							<td>Obcaecati, quo neque nostrum quibusdam nam aspernatur...</td>
-							<td>Très bon</td>
-							<td>+ de 18 ans</td>
 							<td>
-								<a class="nav-link fs-6 text-black-50" title="Proposer un échange ?" href="echange">Disponible</a>
+								{% if game.img is defined and game.img is not null %}
+
+									<img src="{{ asset('images-test/' ~ game.img ) }}" alt="" style="width:100px">
+								{% else %}
+									<img src="{{ asset('images-test/defaultImg.jpg') }}" alt="" style="width:100px">
+								{% endif %}
+							</td>
+
+							<td>{{ game.mark }}</td>
+							<td>{{ game.nom }}</td>
+							<td>{{game.idcat.nom}}</td>
+
+							<td>{{ game.txt|u.truncate(15) }}...</td>
+
+							<td>{{ etatgame}}</td>
+							<td>{{ game.age }}</td>
+
+							<td>
+								<div>
+									En attente d'échange
+								</div>
+								<div>
+									{# {{ selluser.cpost}}
+									{{ selluser.ville}} #}
+								</div>
+								
 							</td>
 						</tr>
 					</tbody>

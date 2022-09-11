@@ -181,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `swap` (
   `swapbuyer` tinyint(1) NOT NULL,
   `idshape_id` int NOT NULL,
   `idgameuser_id` int NOT NULL,
-  `idgamebuyer_id` int NOT NULL,
+  `Idswapbuyer_id` int NOT NULL,
   `iduser_id` int NOT NULL,
   `idbuyer_id` int NOT NULL,
   PRIMARY KEY (`id`),
@@ -189,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `swap` (
   KEY `IDX_25938561786A81FB` (`iduser_id`),
   KEY `IDX_25938561C6A01F2F` (`idbuyer_id`),
   KEY `IDX_25938561E5A9E971` (`idgameuser_id`),
-  KEY `IDX_25938561CB50B679` (`idgamebuyer_id`)
+  KEY `IDX_25938561CB50B679` (`Idswapbuyer_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -260,7 +260,7 @@ ALTER TABLE `reset_password_request`
 ALTER TABLE `swap`
   ADD CONSTRAINT `FK_25938561786A81FB` FOREIGN KEY (`iduser_id`) REFERENCES `user` (`id`),
   ADD CONSTRAINT `FK_25938561C6A01F2F` FOREIGN KEY (`idbuyer_id`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `FK_25938561CB50B679` FOREIGN KEY (`idgamebuyer_id`) REFERENCES `games` (`id`),
+  ADD CONSTRAINT `FK_25938561CB50B679` FOREIGN KEY (`Idswapbuyer_id`) REFERENCES `games` (`id`),
   ADD CONSTRAINT `FK_25938561E5A9E971` FOREIGN KEY (`idgameuser_id`) REFERENCES `games` (`id`),
   ADD CONSTRAINT `FK_25938561FAF324B6` FOREIGN KEY (`idshape_id`) REFERENCES `shape` (`id`);
 COMMIT;

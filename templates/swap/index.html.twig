@@ -30,11 +30,10 @@
 					</thead>
 					<tbody>
 
-						{% set  i = 0 %}
+						{% set i=games|length-1 %}
 
 						{% if games[0] is not empty %}
 							{% for game in games|reverse%}
-
 								<tr>
 									<td>
 										{% if game['0'].img is defined and game['0'].img is not null %}
@@ -54,10 +53,22 @@
 									<td>{{ etats[i] }}</td>
 									<td>{{ game['0'].age }}</td>
 
+									<td>
+										{% if swaps[i].idswapbuyer == null  %}
+											En attente d'échange
+										{% else %}
+											Echange en Cours...
+											<form action="{{ path('app_newdealcheck')}}" method="POST">
+												<input type="hidden" name="seller" value="{{swaps[i].id}}">
+												<input type="hidden" name="buyer" value="{{swaps[i].idswapbuyer}}">
+												<input type="submit" value="Répondre" title="Répondre à cette Proposition d'Echange ?">
 
-									<td>En attente d'échange</td>
+											</form>
+
+										{% endif %}
+									</td>
 								</tr>
-								{% set i = i+1 %}
+								{% set i = i-1 %}
 							{% endfor %}
 						{% else %}
 							<tr>

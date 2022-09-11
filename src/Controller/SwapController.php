@@ -29,29 +29,34 @@ class SwapController extends AbstractController
      */
     public function index(SwapRepository $swapRepository, Tools $tools, GamesRepository $gamesRepository, ShapeRepository $shapeRepository): Response
     {
+        $user = $tools->getUser();
 
-        $games = new ArrayObject();
-        $etat = [];
+        if ($user != null) {
+            // User connecté...
+            $games = new ArrayObject();
+            $etat = [];
 
-        $user = $tools->getUser();        
+            $swap = $swapRepository->findByUser($user);
 
-        $swap = $swapRepository->findByUser($user);
+            $id = $swap['0']->getidgameuser()->getid();
 
-        $id = $swap['0']->getidgameuser()->getid();   
+            for ($i = 0; $i < count($swap); $i++) {
+                $id = $swap[$i]->getidgameuser()->getid();
+                $idshape = $swap[$i]->getidshape()->getid();
+                array_push($etat, $shapeRepository->find($idshape)->getEtat());
+                $games->append($gamesRepository->findGameByUser($id));
+            }
 
-        for ($i = 0; $i < count($swap); $i++) {
-            $id = $swap[$i]->getidgameuser()->getid();
-            $idshape = $swap[$i]->getidshape()->getid();
-            array_push($etat, $shapeRepository->find($idshape)->getEtat());
-            $games->append($gamesRepository->findGameByUser($id));
+            return $this->render('swap/index.html.twig', [
+                'swaps' => $swap,
+                'shapes' => $shapeRepository->findAll(),
+                'games' => $games,
+                'etats' => $etat,
+            ]);
+        } else {
+            // User non Connecté...
+            return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
         }
-
-        return $this->render('swap/index.html.twig', [
-            'swaps' => $swapRepository->findByUser($user),
-            'shapes' => $shapeRepository->findAll(),
-            'games' => $games,
-            'etats' => $etat,
-        ]);
     }
 
     /**
@@ -67,9 +72,6 @@ class SwapController extends AbstractController
         $form->handleRequest($request);
 
         $user = $tools->getUser();
-        // dd($user);
-
-
         if ($user != null) {
             // User connecté...
             if ($form->isSubmitted() && $form->isValid()) {
@@ -79,8 +81,8 @@ class SwapController extends AbstractController
                 $swap->setIdshape($shape);
 
                 $game = $gamesRepository->find($id);
-                
-                dd('Game=',$id, $game);
+
+                dd('Game=', $id, $game);
 
                 $swap->setIdgameuser($game);
 
@@ -91,7 +93,7 @@ class SwapController extends AbstractController
                 $swap->setIduser($user);
 
                 $swap->setIdbuyer(null);
-                $swap->setIdgamebuyer(null);
+                $swap->setIdswapbuyer(null);
 
 
                 $swapRepository->add($swap, true);

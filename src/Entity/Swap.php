@@ -23,12 +23,12 @@ class Swap
      * @ORM\Column(type="boolean")
      */
     private $swapuser;
-   
+
     /**
      * @ORM\Column(type="boolean")
      */
     private $swapbuyer;
-    
+
     /**
      * @ORM\OneToMany(targetEntity=Image::class, mappedBy="idswap")
      */
@@ -58,11 +58,15 @@ class Swap
      */
     private $idgameuser;
 
+    // /**
+    //  * @ORM\ManyToOne(targetEntity=Swap::class, inversedBy="swaps")
+    //  * @ORM\JoinColumn(nullable=false)
+    //  */
+
     /**
-     * @ORM\ManyToOne(targetEntity=Games::class, inversedBy="swaps")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $idgamebuyer;    
+     * @ORM\Column(type="integer")
+     */ 
+    private $Idswapbuyer;
 
     public function __construct()
     {
@@ -97,7 +101,7 @@ class Swap
 
         return $this;
     }
-   
+
     /**
      * @return Collection<int, Image>
      */
@@ -129,7 +133,7 @@ class Swap
     }
 
     public function getIdshape(): ?Shape
-    {        
+    {
         return $this->idshape;
     }
 
@@ -176,14 +180,14 @@ class Swap
         return $this;
     }
 
-    public function getIdgamebuyer(): ?Games
+    public function getIdswapbuyer(): ?int
     {
-        return $this->idgamebuyer;
+        return $this->Idswapbuyer;
     }
 
-    public function setIdgamebuyer(?Games $idgamebuyer): self
+    public function setIdswapbuyer(?int $Idswapbuyer): self
     {
-        $this->idgamebuyer = $idgamebuyer;
+        $this->Idswapbuyer = $Idswapbuyer;
 
         return $this;
     }

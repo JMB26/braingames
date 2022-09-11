@@ -5,6 +5,7 @@
 
 {% block body %}
 
+	{{dump(dispos)}};
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="fs-2 col-6 text-center m-3">
@@ -33,7 +34,6 @@
 
 						{% for game in games%}
 
-
 							<tr>
 								<td>
 									<a class="nav-link fs-6 text-black-50" title="Proposer le votre ?" href="{{ path('app_swap_new', {'id': game.id}) }}">
@@ -59,24 +59,22 @@
 										Non disponible
 									{% else %}
 										{% if dispos[i]|length == 1  %}
-											<form action="{{ path('app_echange')}}" method="POST">
-												<input type="hidden" id="seller" name="seller" value="{{dispos[i][0].id}}">
-												<input type="submit" value="disponible" title="Proposer un échange ?">
-												{% set k = game.id %}
-												{% if seller[k] is defined %}
-													<div class="fs-6">
-														{{user[seller[k][0]-1].cpost}}
-														{{user[seller[k][0]-1].ville}}
-													</div>
-												{% endif %}
-											</form>
-											{# <form action="{{ path('app_contact')}}" method="POST">
-																							<input type="hidden" id="seller" name="seller" value="{{dispos[i][0].id}}">
-																							<input class="fs-6" type="submit" value="Contact" title="Une question à propos de ce jeu ?">
-																						</form> #}
-
+											{% if dispos[i][0].idswapbuyer == null  %}
+												<form action="{{ path('app_echange')}}" method="POST">
+													<input type="hidden" id="seller" name="seller" value="{{dispos[i][0].id}}">
+													<input type="submit" value="disponible" title="Proposer un échange ?">
+													{% set k = game.id %}
+													{% if seller[k] is defined %}
+														<div class="fs-6">
+															{{user[seller[k][0]-1].cpost}}
+															{{user[seller[k][0]-1].ville}}															
+														</div>
+													{% endif %}
+												</form>
+											{% else %}
+												Echange en Cours...
+											{% endif %}
 										{% else %}
-
 
 											<form action="{{ path('app_echange')}}" method="POST">
 
@@ -95,6 +93,8 @@
 																		<option value="{{dispos[i][n].id}}">
 																			{{user[seller[k][n]-1].cpost}}
 																			{{user[seller[k][n]-1].ville}}
+
+																			{{dispos[i][n].idswapbuyer}}
 																		</option>
 																	</div>
 																{% endif %}
@@ -103,20 +103,20 @@
 													</div>
 												{% endif %}
 											</form>
-
-										
 										{% endif %}
 									{% endif %}
 								</td>
 							</tr>
-						</td>
+							{% set i = i+1 %}
+						{% else %}
+							<tr>
+								<td colspan="11">Aucun Jeu Trouvé</td>
+							</tr>
+						{% endfor %}
 					</tbody>
-				</tr>
-			</a>
-		</tbody>
-	</td>
-</tr>
-{% set i = i+1 %}{% else %}
-<tr>
-	<td colspan="11">Aucun produit trouvé</td>
-</tr>{% endfor %}</tbody></table><a href="{{ path('app_games_new') }}">Enregistrer un nouveau Jeu</a></div></div></div>{% endblock %}
+				</table>
+				<a href="{{ path('app_games_new') }}">Enregistrer un Nouveau Jeu</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Proposition d'échange...
+{% endblock %}
+
+{% block body %}
+
+	{{dump(sent)}}
+
+
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="fs-2 col-6 text-center m-3">
+				Votre Proposition d'Echange...
+			</div>
+			<div class="fs-5 col-6 text-center m-3">
+				{% if sent == 1 %}
+					Votre proposition d'échange a bien été envoyée. Vous recevrez bientôt une réponse dans votre boîte mail...
+				{% endif %}
+
+				{% if sent == 2 %}
+					Votre proposition d'échange n'a pas été envoyée. Essayez à nouveau...
+				{% endif %}
+
+				{% if sent == 3 %}
+					Votre proposition d'échange a été acceptée, connectez vous pour lire la réponse...
+				{% endif %}
+
+				{% if sent == 4 %}
+					Votre proposition d'échange n'a pas été acceptée, connectez vous pour lire la réponse...
+				{% endif %}
+
+				{{dump(sent)}}
+				
+			</div>
+		</div>
+	</div>
+{% endblock %}

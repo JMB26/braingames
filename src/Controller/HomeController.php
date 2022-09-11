@@ -71,6 +71,7 @@ class HomeController extends AbstractController
             }        
         }
 
+        // $games = [];
         return $this->render('home/index.html.twig', [
             'categories' => $categoriesRepository->findAll(),
             'games' => $games,

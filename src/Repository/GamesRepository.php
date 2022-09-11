@@ -77,6 +77,39 @@ class GamesRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @return Game[] Returns an array of Game objects by Adulte
+     */
+    public function findGameByAdult(): array
+    {
+        // dd($value);
+        $value = 17;
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.age > :val')
+            ->setParameter('val', $value)
+            ->orderBy('s.age', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
+
+     /**
+     * @return Game[] Returns an array of Game objects by Adulte
+     */
+    public function findGameByChild(): array
+    {
+        // dd($value);
+        $value = 18;
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.age < :val')
+            ->setParameter('val', $value)
+            ->orderBy('s.age', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
     // SELECT * FROM games left JOIN swap ON games.id = swap.idgameuser_id AND swap.iduser_id = $value WHERE swap.idgameuser_id is  null;
 
     /**

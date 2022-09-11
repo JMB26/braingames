@@ -1,25 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nouvel Echange
+{% block title %}Validation d'un échange
 {% endblock %}
 
 {% block body %}
 
 	<div class="container">
 		<div class="row justify-content-center">
-			<div class="fs-2 col-6 text-center m-3">
-				Proposer un échange de ce jeu ou...
-			</div>
-			<div class="fs-2 col-6 text-center m-3">
-				<form action="{{ path('app_echange') }}" method="POST">
-					<input type="hidden" id="seller" name="seller" value="{{swapsell.id}}">
-					<button type="submit" class="d-grid btn btn-outline-success mx-auto">Selectionner un autre jeu</button>
-				</form>
-			</div>
+			<div class="fs-2 text-center m-3">Validation de la Proposition d'Echange de votre Jeu ?</div>
+		</div>
+		<div class="row justify-content-center">
+			<div class="fs-4 text-center m-3">
 
-
-			<div class="fs-6 text-center m-3">
-				<table class="table">
+				<table class="table table-hover fs-6">
 					<thead>
 						<tr>
 							<th scope="col" class="fdtitre"></th>
@@ -50,20 +43,48 @@
 
 							<td>{{ gamesell.txt|u.truncate(15) }}...</td>
 
-							<td>{{ etatgamesell}}</td>
+							<td>{{ etatsell}}</td>
 							<td>{{ gamesell.age }}</td>
 
 							<td>
-								En attente d'échange
+								<div>
+									Echange en cours
+								</div>
+								<div>
+									{{adrsel}}
+								</div>
+
 							</td>
 						</tr>
 
-						<tr class="bg-light">
-							<th scope="col" colspan="1" class="fs-3 text-center"><img src="{{asset('assets/img/swap-icon-2.jpg') }}" alt=""></th>
-							<th scope="col" colspan="6" class="fs-3 text-center">Avec le votre.</th>
-							<th scope="col" colspan="1" class="fs-3 text-center"><img src="{{asset('assets/img/swap-icon-1.jpg') }}" alt=""></th>
-						</tr>
 
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="row justify-content-center">
+			<div class="fs-2 text-center">Avec le Jeu ci-Dessous ?</div>
+		</div>
+
+		<div class="row justify-content-center">
+			<div class="fs-4 col-12 text-center m-3">
+
+				<table class="table table-hover fs-6">
+					<thead>
+						<tr>
+							<th scope="col" class="fdtitre"></th>
+							<th scope="col" class="fdtitre">Marque</th>
+							<th scope="col" class="fdtitre">Modèle</th>
+							<th scope="col" class="fdtitre">Catégorie</th>
+							<th scope="col" class="fdtitre">Descriptif</th>
+							<th scope="col" class="fdtitre">Etat</th>
+							<th scope="col" class="fdtitre">Age</th>
+							<th scope="col" class="fdtitre">Statut</th>
+						</tr>
+					</thead>
+
+					<tbody>
 						<tr>
 							<td>
 								{% if gamebuy.img is defined and gamebuy.img is not null %}
@@ -80,11 +101,16 @@
 
 							<td>{{ gamebuy.txt|u.truncate(15) }}...</td>
 
-							<td>{{ etatgamebuy }}</td>
+							<td>{{ etatbuy}}</td>
 							<td>{{ gamebuy.age }}</td>
 
 							<td>
-								En attente d'échange
+								<div>
+									Echange en cours
+								</div>
+								<div>
+									{{adrbuy}}
+								</div>
 							</td>
 						</tr>
 
@@ -94,14 +120,15 @@
 							<td></td>
 						</tr>
 
-						<form action="{{ path('app_newdeal') }}" method="POST">
+						<form action="{{ path('app_newdealcheck') }}" method="POST">
 							<tr>
 								<td></td>
 								<td colspan="6" class="fs-4 text-center">
 									<textarea class="form-control m-3" id="message" rows="3">Bonjour,</textarea>
-									<input type="hidden" id="seller" name="seller" value="{{swapsell.id}}">
-									<input type="hidden" id="idbuy" name="idbuy" value="{{idswapbuy}}">
-									<button type="submit" class="d-grid btn btn-outline-success mx-auto">Envoyer votre Proposition</button>
+									<input type="hidden" name="seller" value="{{swapsell.id}}">
+									<input type="hidden" name="buyer" value="{{swapbuy.id}}">
+									<input class="fs-6" type="submit" name="check" value="Accepter" title="Accepter cette Proposition ?">
+									<input class="fs-6" type="submit" name="check" value="Refuser" title=" Refuser cette Proposition ?">
 								</td>
 								<td></td>
 							</tr>
@@ -110,5 +137,6 @@
 				</table>
 			</div>
 
-
-		{% endblock %}
+		</div>
+	</div>
+{% endblock %}

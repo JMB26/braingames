@@ -15,31 +15,35 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class SwapType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
-    {           
+    {
         $builder
             ->add('swapuser')
-            ->add('swapbuyer')           
+            ->add('swapbuyer')
 
-            ->add('idshape' ,EntityType::class,[
+            ->add('idshape', EntityType::class, [
                 'class' => Shape::class,
-                'choice_label' => 'id' ])        
-            
-            ->add('iduser' ,EntityType::class,[
-                'class' => User::class,
-                'choice_label' => 'id' ])     
+                'choice_label' => 'id'
+            ])
 
-            ->add('idbuyer' ,EntityType::class,[
+            ->add('iduser', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'id' ])    
-           
-            ->add('idgameuser' ,EntityType::class,[
-                'class' => Games::class,
-                'choice_label' => 'id' ])    
+                'choice_label' => 'id'
+            ])
 
-            ->add('idgamebuyer' ,EntityType::class,[
+            ->add('idbuyer', EntityType::class, [
+                'class' => User::class,
+                'choice_label' => 'id'
+            ])
+
+            ->add('idgameuser', EntityType::class, [
                 'class' => Games::class,
-                'choice_label' => 'id' ])  
-        ;
+                'choice_label' => 'id'
+            ])
+
+            ->add('Idswapbuyer', EntityType::class, [
+                'class' => Games::class,
+                'choice_label' => 'id'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

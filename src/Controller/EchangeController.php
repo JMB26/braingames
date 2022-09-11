@@ -27,6 +27,10 @@ class EchangeController extends AbstractController
         if ($user != null) {
             // User connecté...
             $id = htmlspecialchars($_POST['seller']);
+
+
+
+            
             $swapsell = $swapRepository->find($id);
                      
             $idgame = $swapsell->getIdgameuser()->getId();
