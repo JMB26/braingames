@@ -128,6 +128,17 @@ class GamesRepository extends ServiceEntityRepository
             ->getResult();         
     }
 
+    public function findGameByCateg($value): array
+    {          
+            return $this->createQueryBuilder('g')   
+            ->andWhere('g.idcat = :val')
+            ->setParameter('val', $value)
+            ->orderBy('g.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();       
+    }
+
     // ->addSelect('r') 
     // ->leftJoin('e.relatedEntity', 'r')
     // ->where('r.foo = :parameter')

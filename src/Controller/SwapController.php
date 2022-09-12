@@ -46,7 +46,7 @@ class SwapController extends AbstractController
                 array_push($etat, $shapeRepository->find($idshape)->getEtat());
                 $games->append($gamesRepository->findGameByUser($id));
             }
-
+// dd($swap);
             return $this->render('swap/index.html.twig', [
                 'swaps' => $swap,
                 'shapes' => $shapeRepository->findAll(),

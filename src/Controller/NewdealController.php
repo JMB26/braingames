@@ -26,6 +26,7 @@ class NewdealController extends AbstractController
     public function index(Request $request, MailerInterface $mailer, GamesRepository $gamesRepository, SwapRepository $swapRepository, ShapeRepository $shapeRepository, Tools $tools, UserRepository $userRepository): Response
     {
 
+        // dd($_POST);
         $user = $tools->getUser();
 
         if ($user != null) {
@@ -63,17 +64,17 @@ class NewdealController extends AbstractController
                             $idswapbuy = htmlspecialchars($_POST['idbuy']);
 
                             $swapsell = $swapRepository->find($idswapsel);
-                            $swapbuy = $swapRepository->find($idswapbuy);
-
-                            dump($swapsell, $user->getId(), $idswapbuy);
+                            $swapbuy = $swapRepository->find($idswapbuy);                           
 
                             $swapsell->setIdbuyer($user);
                             $swapsell->setIdswapbuyer($idswapbuy);  
-                            dump($swapsell);
-                            
                             $swapRepository->add($swapsell, true);
 
-                            // dd($swapsell);
+                            $swapbuy->setIdswapbuyer($idswapsel);
+// dd($idswapsel,$swapbuy);
+
+                            $swapRepository->add($swapbuy, true);  
+                           
                         } catch (TransportExceptionInterface $e) {
                             $sent = 0;
                         }
@@ -104,9 +105,7 @@ class NewdealController extends AbstractController
                         $etatgamesell = $swapsell->getidshape()->getetat();
                         $idgamesel = $swapsell->getIdgameuser()->getId();
                         $gamesel = $gamesRepository->find($idgamesel);
-
-                        $selluser = $userRepository->find($swapsell->getIduser()->getId());
-
+                      
                         return $this->renderform('newdeal/index.html.twig', [
                             'etatgamesell' => $etatgamesell,
                             'etatgamebuy' => $etatgamebuy,
@@ -116,9 +115,7 @@ class NewdealController extends AbstractController
                             'idswapbuy' => $idswapbuy,
                             'newdealform' => $form,
                         ]);
-                    } else {
-
-                        dd('home');
+                    } else {                       
                         return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
                     }
                 }

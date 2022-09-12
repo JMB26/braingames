@@ -59,6 +59,7 @@
 										Non disponible
 									{% else %}
 										{% if dispos[i]|length == 1  %}
+											{# 1 dispo ? #}
 											{% if dispos[i][0].idswapbuyer == null  %}
 												<form action="{{ path('app_echange')}}" method="POST">
 													<input type="hidden" id="seller" name="seller" value="{{dispos[i][0].id}}">
@@ -67,7 +68,7 @@
 													{% if seller[k] is defined %}
 														<div class="fs-6">
 															{{user[seller[k][0]-1].cpost}}
-															{{user[seller[k][0]-1].ville}}															
+															{{user[seller[k][0]-1].ville}}
 														</div>
 													{% endif %}
 												</form>
@@ -75,31 +76,67 @@
 												Echange en Cours...
 											{% endif %}
 										{% else %}
+											{# Plusieurs dispo ? #}
 
 											<form action="{{ path('app_echange')}}" method="POST">
-
 												{% set k = game.id %}
 												{% if seller[k] is defined %}
+
+													{# {{dump(dispos[i])}}; #}
+													{% set  nb = 0 %}
+
+													{% for n in 0.. dispos[i]|length-1 %}
+														{# {{dump(dispos[i][n].idswapbuyer)}}; #}
+														{% if dispos[i][n].idswapbuyer == null  %}
+															{% set  nb = nb+1 %}
+														{% endif %}
+													{% endfor %}
+
+													
+
 													<div>
-														<input type="submit" value="{{dispos[i]|length}} disponibles" title="Proposer un échange ?">
+														{# Nb dispo ?  #}
+														{% if (nb == 0) %}
+															Echange en Cours...
+														{% else %}
+															{% if (nb == 1) %}
+																{# 1 seul dispo  #}
+																{% for n in 0.. dispos[i]|length-1 %}
+																	{% if dispos[i][n].idswapbuyer == null  %}
+																		<form action="{{ path('app_echange')}}" method="POST">
+																			<input type="hidden" id="seller" name="seller" value="{{dispos[i][0].id}}">
+																			<input type="submit" value="disponible" title="Proposer un échange ?">
+																			{% set k = game.id %}
+																			{% if seller[k] is defined %}
+																				<div class="fs-6">
+																					{{user[seller[k][0]-1].cpost}}
+																					{{user[seller[k][0]-1].ville}}
+																				</div>
+																			{% endif %}
+																		</form>
+																	{% endif %}
+																{% endfor %}
+															{% else %}
+																{# Plusieurs Dispo #}
+																<div>
+														{# <input type="submit" value="{{dispos[i]|length}} disponibles" title="Proposer un échange ?"> #}
+														<input type="submit" value="{{nb}} disponible" title="Proposer un échange ?">
 													</div>
-													<div>
-														<select class="fs-6" name="seller" id="seller">
-															{% for n in 0.. dispos[i]|length-1 %}
-
-
-																{% if seller[k][n] is defined %}
-																	<div class="fs-6">
-																		<option value="{{dispos[i][n].id}}">
-																			{{user[seller[k][n]-1].cpost}}
-																			{{user[seller[k][n]-1].ville}}
-
-																			{{dispos[i][n].idswapbuyer}}
-																		</option>
-																	</div>
-																{% endif %}
-															{% endfor %}
-														</select>
+																<select class="fs-6" name="seller" id="seller">
+																	{% for n in 0.. dispos[i]|length-1 %}
+																		{% if seller[k][n] is defined %}
+																			<div class="fs-6">
+																				<option value="{{dispos[i][n].id}}">
+																					{{user[seller[k][n]-1].cpost}}
+																					{{user[seller[k][n]-1].ville}}
+																					{{dispos[i][n].idswapbuyer}}
+																				</option>
+																			</div>
+																		{% endif %}
+																	{% endfor %}
+																</select>
+															{% endif %}
+														{% endif %}
 													</div>
 												{% endif %}
 											</form>
@@ -107,16 +144,15 @@
 									{% endif %}
 								</td>
 							</tr>
-							{% set i = i+1 %}
-						{% else %}
-							<tr>
-								<td colspan="11">Aucun Jeu Trouvé</td>
-							</tr>
-						{% endfor %}
+						</td>
 					</tbody>
-				</table>
-				<a href="{{ path('app_games_new') }}">Enregistrer un Nouveau Jeu</a>
-			</div>
-		</div>
-	</div>
-{% endblock %}
+				</tr>
+			</td>
+		</tbody>
+	</tr>
+	{% set i = i+1 %}
+{% else %}
+	<tr>
+		<td colspan="11">Aucun Jeu Trouvé</td>
+	</tr>
+{% endfor %}</tbody></table><a href="{{ path('app_games_new') }}">Enregistrer un Nouveau Jeu</a></div></div></div>{% endblock %}

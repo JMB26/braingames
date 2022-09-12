@@ -57,14 +57,21 @@
 										{% if swaps[i].idswapbuyer == null  %}
 											En attente d'échange
 										{% else %}
-											Echange en Cours...
-											<form action="{{ path('app_newdealcheck')}}" method="POST">
-												<input type="hidden" name="seller" value="{{swaps[i].id}}">
-												<input type="hidden" name="buyer" value="{{swaps[i].idswapbuyer}}">
-												<input type="submit" value="Répondre" title="Répondre à cette Proposition d'Echange ?">
-
-											</form>
-
+											{% if swaps[i].swapuser == false  %}
+												Echange en Cours...
+												<form action="{{ path('app_newdealcheck')}}" method="POST">
+													<input type="hidden" name="seller" value="{{swaps[i].id}}">
+													<input type="hidden" name="buyer" value="{{swaps[i].idswapbuyer}}">
+													<input type="submit" value="Message" title="Répondre à cette Proposition d'Echange ?">
+												</form>
+											{% else %}
+												Echange validé
+												<form action="{{ path('app_newdealcheck')}}" method="POST">
+													<input type="hidden" name="seller" value="{{swaps[i].id}}">
+													<input type="hidden" name="buyer" value="{{swaps[i].idswapbuyer}}">
+													<input type="submit" value="Detail" title="Afficher le détail de l'echange ?">
+												</form>
+											{% endif %}
 										{% endif %}
 									</td>
 								</tr>

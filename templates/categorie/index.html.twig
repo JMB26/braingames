@@ -1,13 +1,128 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des jeux par catégorie{% endblock %}
+{% block title %}Liste des jeux par catégorie
+{% endblock %}
 
 {% block body %}
-<div class="container">
+
+	<div class="container">
 		<div class="row justify-content-center">
-			<div class="col-6">
-				<h1>Liste des jeux par catégorie...</h1>
+			<div class="fs-2 col-8 text-center m-3">
+				Liste des
+				{{ categ }}
+				à Echanger...
+			</div>
+		</div>
+
+		<div class="row justify-content-center">
+			<div class="fs-4 col-12 text-center m-3">
+
+				<table class="table fs-5">
+					<thead>
+						<tr class="text-center">
+							<th scope="col" class="fdtitre"></th>
+							<th scope="col" class="fdtitre">Marque</th>
+							<th scope="col" class="fdtitre">Modèle</th>
+							<th scope="col" class="fdtitre">Catégorie</th>
+							<th scope="col" class="fdtitre text-center">Descriptif</th>
+							<th scope="col" class="fdtitre">Age</th>
+							<th scope="col" class="fdtitre">Echange</th>
+						</tr>
+					</thead>
+					<tbody>
+
+						{% set  i = 0 %}
+
+						{% for game in games%}
+
+							<tr>
+								<td>
+									<a class="nav-link fs-6 text-black-50" title="Proposer le votre ?" href="{{ path('app_swap_new', {'id': game.id}) }}">
+										{% if game.img is defined and game.img is not null %}
+
+											<img src="{{ asset('images-test/' ~ game.img ) }}" alt="" style="width:100px">
+										{% else %}
+											<img src="{{ asset('images-test/defaultImg.jpg') }}" alt="" style="width:100px">
+										{% endif %}
+									</a>
+								</td>
+
+								<td>{{ game.mark }}</td>
+								<td>{{ game.nom }}</td>
+								<td>{{game.idcat.nom}}</td>
+
+								<td>{{ game.txt|u.truncate(15) }}...</td>
+
+								<td>{{ game.age }}</td>
+								<td>
+
+									{% if dispos[i]|length == 0  %}
+										Non disponible
+									{% else %}
+										{% if dispos[i]|length == 1  %}
+											{% if dispos[i][0].idswapbuyer == null  %}
+												<form action="{{ path('app_echange')}}" method="POST">
+													<input type="hidden" id="seller" name="seller" value="{{dispos[i][0].id}}">
+													<input type="submit" value="disponible" title="Proposer un échange ?">
+													{% set k = game.id %}
+													{% if seller[k] is defined %}
+														<div class="fs-6">
+															{{user[seller[k][0]-1].cpost}}
+															{{user[seller[k][0]-1].ville}}
+														</div>
+													{% endif %}
+												</form>
+											{% else %}
+												Echange en Cours...
+											{% endif %}
+										{% else %}
+
+											<form action="{{ path('app_echange')}}" method="POST">
+
+												{% set k = game.id %}
+												{% if seller[k] is defined %}
+													<div>
+														<input type="submit" value="{{dispos[i]|length}} disponibles" title="Proposer un échange ?">
+													</div>
+													<div>
+														<select class="fs-6" name="seller" id="seller">
+															{% for n in 0.. dispos[i]|length-1 %}
+
+
+																{% if seller[k][n] is defined %}
+																	<div class="fs-6">
+																		<option value="{{dispos[i][n].id}}">
+																			{{user[seller[k][n]-1].cpost}}
+																			{{user[seller[k][n]-1].ville}}
+
+																			{{dispos[i][n].idswapbuyer}}
+																		</option>
+																	</div>
+																{% endif %}
+															{% endfor %}
+														</select>
+													</div>
+												{% endif %}
+											</form>
+										{% endif %}
+									{% endif %}
+								</td>
+							</tr>
+							{% set i = i+1 %}
+						{% else %}
+							<tr>
+								<td colspan="11">Aucun Jeu Trouvé</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				{% if (i != 0) %}
+					<a href="{{ path('app_games_new') }}">Enregistrer un Nouveau Jeu</a>
+				{% endif %}
+
+
 			</div>
 		</div>
 	</div>
+
 {% endblock %}

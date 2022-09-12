@@ -7,7 +7,12 @@
 
 	<div class="container">
 		<div class="row justify-content-center">
-			<div class="fs-2 text-center m-3">Validation de la Proposition d'Echange de votre Jeu ?</div>
+		{% if swapsell.swapbuyer == false  %}
+										<div class="fs-2 text-center m-3">Validation de la Proposition d'Echange de votre Jeu ?</div>
+									{% else %}
+										<div class="fs-2 text-center m-3">Validation de l'Echange de votre Jeu ?</div>
+									{% endif %}
+			
 		</div>
 		<div class="row justify-content-center">
 			<div class="fs-4 text-center m-3">
@@ -48,7 +53,11 @@
 
 							<td>
 								<div>
-									Echange en cours
+									{% if swapsell.swapuser == false  %}
+										Echange en Cours...
+									{% else %}
+										Echange validé !
+									{% endif %}
 								</div>
 								<div>
 									{{adrsel}}
@@ -105,8 +114,12 @@
 							<td>{{ gamebuy.age }}</td>
 
 							<td>
-								<div>
-									Echange en cours
+								<div>								
+									{% if swapsell.swapbuyer == false  %}
+										Echange en Cours...
+									{% else %}
+										Echange validé !
+									{% endif %}
 								</div>
 								<div>
 									{{adrbuy}}
@@ -124,11 +137,18 @@
 							<tr>
 								<td></td>
 								<td colspan="6" class="fs-4 text-center">
-									<textarea class="form-control m-3" id="message" rows="3">Bonjour,</textarea>
+									<textarea name="txt" class="form-control m-3" id="message" rows="3">Bonjour,</textarea>
 									<input type="hidden" name="seller" value="{{swapsell.id}}">
 									<input type="hidden" name="buyer" value="{{swapbuy.id}}">
-									<input class="fs-6" type="submit" name="check" value="Accepter" title="Accepter cette Proposition ?">
-									<input class="fs-6" type="submit" name="check" value="Refuser" title=" Refuser cette Proposition ?">
+									{% if swapsell.swapbuyer == false  %}
+										<input class="fs-6" type="submit" name="check" value="Accepter" title="Accepter cette Proposition ?">
+										<input class="fs-6" type="submit" name="check" value="Refuser" title=" Refuser cette Proposition ?">
+									{% else %}
+										<input class="fs-6" type="submit" name="check" value="Valider" title="Valider l'échange ?">
+										<input class="fs-6" type="submit" name="check" value="Refuser" title=" Refuser l'échange ?">
+									{% endif %}
+									
+									
 								</td>
 								<td></td>
 							</tr>

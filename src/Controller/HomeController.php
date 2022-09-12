@@ -39,14 +39,14 @@ class HomeController extends AbstractController
         $dispo = [];
         $gamesell = [];
         $sell = [];
-       
-
-        // dump($gamesell,$sell);
+      
         for ($i = 0; $i < count($games); $i++) {
             $idgame = $games[$i]->getid();
-            $sw = $swapRepository->findByGame($idgame);
+            $sw = $swapRepository->findByGame($idgame);   
 
             if (!empty($sw)) {
+
+                // dd($sw['0']->getIdswapbuyer());
                 $idgame = $sw['0']->getidgameuser()->getid();
 
                 if (array_key_exists($idgame, $gamesell)) {
@@ -62,15 +62,15 @@ class HomeController extends AbstractController
                         array_push($sell, $idseller);
                         $gamesell[$idgame] = $sell;
                     }    
-                }
-
+                }               
+               
                 array_push($dispo, $sw);
             } else {
                 $sw = "";
                 array_push($dispo, $sw);
             }        
         }
-
+       
         // $games = [];
         return $this->render('home/index.html.twig', [
             'categories' => $categoriesRepository->findAll(),
