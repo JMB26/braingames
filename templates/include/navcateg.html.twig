@@ -1,0 +1,9 @@
+{# {{dump('navcateg-twig',navcat)}} #}
+
+
+{% for cat in navcat %}
+{# {{dump(cat.nom)}}  #}
+	<li>
+		<a class="dropdown-item" href="{{path('app_categorie', {'cat': 'Jeux 3D Bois'}) }}">{{cat.nom}}</a>
+	</li>
+{% endfor %} 

@@ -21,8 +21,7 @@ class ErrorController extends AbstractController
     // Affichage template des erreurs
     public function show(): Response 
     {
-        return $this->render('error/index.html.twig', [
-            'controller_name' => 'ErrorController',
+        return $this->render('error/index.html.twig', [           
         ]);
     }
 }

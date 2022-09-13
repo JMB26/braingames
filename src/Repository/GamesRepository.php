@@ -80,24 +80,25 @@ class GamesRepository extends ServiceEntityRepository
     /**
      * @return Game[] Returns an array of Game objects by Adulte
      */
-    public function findGameByAdult(): array
+    public function findGameByAdult($offset): array
     {
         // dd($value);
         $value = 17;
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.age > :val')
+        return $this->createQueryBuilder('g')           
+            ->andWhere('g.age > :val')
             ->setParameter('val', $value)
-            ->orderBy('s.age', 'ASC')
-            ->setMaxResults(10)
+            ->orderBy('g.age', 'ASC')
+            ->setMaxResults(5)
+            ->setFirstResult($offset)
             ->getQuery()
             ->getResult();
     }
 
 
-     /**
+    /**
      * @return Game[] Returns an array of Game objects by Adulte
      */
-    public function findGameByChild(): array
+    public function findGameByChild($offset): array
     {
         // dd($value);
         $value = 18;
@@ -105,7 +106,8 @@ class GamesRepository extends ServiceEntityRepository
             ->andWhere('s.age < :val')
             ->setParameter('val', $value)
             ->orderBy('s.age', 'ASC')
-            ->setMaxResults(10)
+            ->setMaxResults(5)
+            ->setFirstResult($offset)
             ->getQuery()
             ->getResult();
     }
@@ -128,6 +130,9 @@ class GamesRepository extends ServiceEntityRepository
             ->getResult();         
     }
 
+    /**
+     * @return Game[] Returns an array of Game objects by Categorie
+     */
     public function findGameByCateg($value): array
     {          
             return $this->createQueryBuilder('g')   
@@ -138,6 +143,60 @@ class GamesRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();       
     }
+
+    public function findGameAllByFive($offset): array
+    {          
+            return $this->createQueryBuilder('g')
+            ->orderBy('g.id', 'ASC')
+            ->setMaxResults(5)
+            ->setFirstResult($offset)
+            ->getQuery()
+            ->getResult();       
+    }
+    
+    /**
+     * @return Game[] Returns an count of all Game objects
+     */
+    public function findGameCount(): array
+    {       
+            $value = 17;   
+            return $this->createQueryBuilder('g')
+            ->select('count(g.id)')            
+            ->getQuery()
+            ->getResult();       
+    }
+   
+    /**
+     * @return Game[] Returns an count of Game objects by Adulte
+     */
+    public function findGameAdultCount(): array
+    {        
+        $value = 17;
+        return $this->createQueryBuilder('g')  
+            ->select('count(g.id)')          
+            ->andWhere('g.age > :val')
+            ->setParameter('val', $value)            
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Game[] Returns an count of Game objects by Child
+     */
+    public function findGameChildCount(): array
+    {        
+        $value = 18;
+        return $this->createQueryBuilder('g')  
+            ->select('count(g.id)')          
+            ->andWhere('g.age < :val')
+            ->setParameter('val', $value)            
+            ->getQuery()
+            ->getResult();
+    }
+
+
+
+
 
     // ->addSelect('r') 
     // ->leftJoin('e.relatedEntity', 'r')

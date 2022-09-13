@@ -20,8 +20,7 @@ class CategorieController extends AbstractController
     public function index($cat, CategoriesRepository $categoriesRepository, GamesRepository $gamesRepository, SwapRepository $swapRepository, Tools $tools, UserRepository $userRepository): Response
     {
 
-
-
+        
         if ($cat == null) {
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
@@ -29,19 +28,19 @@ class CategorieController extends AbstractController
         $user = $tools->getUser();
 
         $categ = $categoriesRepository->findByCatNom($cat);
-        
+
         if ($user != null) {
             $iduser = $user->getId();
             // $games = $gamesRepository->findGameByCategNotUser($iduser,$cat);
-            if ($categ != null) {           
-                $games = $gamesRepository->findGameByCateg($categ[0]['id']);            
+            if ($categ != null) {
+                $games = $gamesRepository->findGameByCateg($categ[0]['id']);
             } else {
                 $games = [];
             }
         } else {
             $iduser = 0;
-            if ($categ != null) {           
-                $games = $gamesRepository->findGameByCateg($categ[0]['id']);            
+            if ($categ != null) {
+                $games = $gamesRepository->findGameByCateg($categ[0]['id']);
             } else {
                 $games = [];
             }
@@ -82,6 +81,7 @@ class CategorieController extends AbstractController
             }
         }
 
+        
         // $games = [];
         return $this->render('categorie/index.html.twig', [
             'categories' => $categoriesRepository->findAll(),
@@ -90,7 +90,16 @@ class CategorieController extends AbstractController
             'seller' => $gamesell,
             'user' => $alluser,
             'categ' => $cat,
-
         ]);
     }
+
+    public function navcateg(CategoriesRepository $categoriesRepository)
+    {    
+
+        // dd($categoriesRepository->findAllOrderByNom());
+        return $this->render('include/navcateg.html.twig', [            
+            'navcat' => $categoriesRepository->findAllOrderByNom(),            
+        ]);
+    }
+
 }

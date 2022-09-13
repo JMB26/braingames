@@ -1,9 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Jeux Adulte{% endblock %}
+{% block title %}Jeux Adulte
+{% endblock %}
 
 {% block body %}
-<div class="container">
+
+	<div class="container">
 		<div class="row justify-content-center">
 			<div class="fs-2 col-6 text-center m-3">
 				Liste des Jeux Adulte à Echanger...
@@ -98,7 +100,7 @@
 										{% endif %}
 									{% endif %}
 								</td>
-							</tr>						
+							</tr>
 							{% set i = i+1 %}
 						{% else %}
 							<tr>
@@ -107,6 +109,34 @@
 						{% endfor %}
 					</tbody>
 				</table>
+
+				{% if page > 1 %}
+					<table>
+						<tr>
+							<td>
+								{% if ipage > 1 %}
+									<a href="{{ path('app_adulte', {'ipag': ipage-1}) }}" class="text-decoration-none"><</a>&nbsp
+								{% endif %}	
+							</td>										
+							
+							{# Barre de page #}
+							{% for n in 1.. page %}
+								{% if ipage == n %}
+									<td class="fs-3 font-weight-bold">{{n}}&nbsp</td> 
+								{% else %}						
+									<td><a class="fs-5" href="{{ path('app_adulte', {'ipag': n}) }}">{{n}}</a>&nbsp</td> 								                   
+								{% endif %}	
+							{% endfor %}
+
+							<td>
+								{% if ipage <= page-1 %}
+									<a href="{{ path('app_adulte', {'ipag': ipage+1}) }}" class="text-decoration-none">></a>&nbsp
+								{% endif %}	
+							</td>
+						</tr>
+					</table>
+				{% endif %}		
+
 				<a href="{{ path('app_games_new') }}">Enregistrer un Nouveau Jeu</a>
 			</div>
 		</div>

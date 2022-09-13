@@ -14,21 +14,43 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdulteController extends AbstractController
 {
     /**
-     * @Route("/adulte", name="app_adulte")
+     * @Route("/adulte/{ipag}", name="app_adulte", defaults={"ipag": null})
      */
-    public function index(CategoriesRepository $categoriesRepository, GamesRepository $gamesRepository, SwapRepository $swapRepository, Tools $tools, UserRepository $userRepository): Response
-    {
+    public function index($ipag,CategoriesRepository $categoriesRepository, GamesRepository $gamesRepository, SwapRepository $swapRepository, Tools $tools, UserRepository $userRepository): Response
+    {        
+
+        if ($ipag == null) {
+            $ipag = 1;
+        }   
+        
+        $pag = intval($gamesRepository->findGameAdultCount()[0][1] / 5) + 1;
+
+        if ($ipag > $pag) {
+            $ipag = $pag;
+        }    
+        $offset = ($ipag-1)*5;  
 
         $user = $tools->getUser();
 
         if ($user != null) {
             $iduser = $user->getId();
             // $games = $gamesRepository->findGameByNotUser($iduser);
-            $games = $gamesRepository-> findGameByAdult();                
+            $games = $gamesRepository-> findGameByAdult($offset);                
         } else {
             $iduser = 0;
-            $games = $gamesRepository->findGameByAdult();
+            $games = $gamesRepository->findGameByAdult($offset);
         }
+                  
+        $countgames = count($games);       
+
+        if ($ipag == null) {
+            $ipag = 1;
+        }   
+        $pag = intval(($countgames/5)+1);
+
+        if ($ipag > $pag) {
+            $ipag = $pag;
+        }      
 
         $alluser = $userRepository->findAll();
 
@@ -38,8 +60,10 @@ class AdulteController extends AbstractController
        
 
         // dump($gamesell,$sell);
-        for ($i = 0; $i < count($games); $i++) {
-            $idgame = $games[$i]->getid();
+        for ($i = 0; $i < $countgames; $i++) {
+            // dd($games);
+            $idgame = $games[$i];
+            // dd($idgame);
             $sw = $swapRepository->findByGame($idgame);
 
             if (!empty($sw)) {
@@ -65,14 +89,16 @@ class AdulteController extends AbstractController
                 $sw = "";
                 array_push($dispo, $sw);
             }        
-        }
+        }                
        
         return $this->render('adulte/index.html.twig', [
             'categories' => $categoriesRepository->findAll(),
             'games' => $games,
             'dispos' => $dispo,
             'seller' => $gamesell,
-            'user' => $alluser,            
+            'user' => $alluser,  
+            'page' => $pag,
+            'ipage' => $ipag,          
         ]);       
     }
 }

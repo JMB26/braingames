@@ -36,7 +36,10 @@ class SearchController extends AbstractController
                 ]
             ])           
             ->getForm();
+                       
+
         return $this->render('search/searchBar.html.twig', [
+            // 'navcat' => $categoriesRepository->findAllOrderByNom(),
             'categories' => $categoriesRepository->findAll(), 
             'form' => $form->createView()
         ]);
@@ -54,8 +57,10 @@ class SearchController extends AbstractController
         }
 
         return $this->render('search/index.html.twig', [
-            'categories' => $categoriesRepository->findAll(),
-            'games' => $games
+            // 'categories' => $categoriesRepository->findAll(),
+            // 'navcat' => $categoriesRepository->findAllOrderByNom(),
+            'games' => $games,
+            'rech' => $query, 
         ]);
     }
 

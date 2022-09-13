@@ -14,21 +14,36 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class EnfantController extends AbstractController
 {
     /**
-     * @Route("/enfant", name="app_enfant")
+     * @Route("/enfant/{ipag}", name="app_enfant", defaults={"ipag": null})
      */
-    public function index(CategoriesRepository $categoriesRepository, GamesRepository $gamesRepository, SwapRepository $swapRepository, Tools $tools, UserRepository $userRepository): Response
+    public function index($ipag,CategoriesRepository $categoriesRepository, GamesRepository $gamesRepository, SwapRepository $swapRepository, Tools $tools, UserRepository $userRepository): Response
     {
 
-        $user = $tools->getUser();
+        if ($ipag == null) {
+            $ipag = 1;
+        }   
+        
+        $pag = intval($gamesRepository->findGameChildCount()[0][1] / 5) + 1;
 
+        if ($ipag > $pag) {
+            $ipag = $pag;
+        }    
+        $offset = ($ipag-1)*5;  
+        
+        $user = $tools->getUser();
         if ($user != null) {
             $iduser = $user->getId();
             // $games = $gamesRepository->findGameByNotUser($iduser);
-            $games = $gamesRepository-> findGameByChild();                
+            
+            $games = $gamesRepository-> findGameByChild($offset);                
         } else {
             $iduser = 0;
-            $games = $gamesRepository->findGameByChild();
+            $games = $gamesRepository->findGameByChild($offset);
         }
+
+        $countgames = count($games);       
+
+        
 
         $alluser = $userRepository->findAll();
 
@@ -38,7 +53,7 @@ class EnfantController extends AbstractController
        
 
         // dump($gamesell,$sell);
-        for ($i = 0; $i < count($games); $i++) {
+        for ($i = 0; $i < $countgames; $i++) {
             $idgame = $games[$i]->getid();
             $sw = $swapRepository->findByGame($idgame);
 
@@ -72,7 +87,9 @@ class EnfantController extends AbstractController
             'games' => $games,
             'dispos' => $dispo,
             'seller' => $gamesell,
-            'user' => $alluser,            
+            'user' => $alluser, 
+            'page' => $pag,
+            'ipage' => $ipag,             
         ]);       
     }
 }

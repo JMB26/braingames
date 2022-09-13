@@ -107,6 +107,34 @@
 						{% endfor %}
 					</tbody>
 				</table>
+
+				{% if page > 1 %}
+					<table>
+						<tr>
+							<td>
+								{% if ipage > 1 %}
+									<a href="{{ path('app_enfant', {'ipag': ipage-1}) }}" class="text-decoration-none"><</a>&nbsp
+								{% endif %}	
+							</td>										
+							
+							{# Barre de page #}
+							{% for n in 1.. page %}
+								{% if ipage == n %}
+									<td class="fs-3 font-weight-bold">{{n}}&nbsp</td> 
+								{% else %}						
+									<td><a class="fs-5" href="{{ path('app_enfant', {'ipag': n}) }}">{{n}}</a>&nbsp</td> 								                   
+								{% endif %}	
+							{% endfor %}
+
+							<td>
+								{% if ipage <= page-1 %}	
+									<a href="{{ path('app_enfant', {'ipag': ipage+1}) }}" class="text-decoration-none">></a>&nbsp
+								{% endif %}	
+							</td>
+						</tr>
+					</table>
+				{% endif %}		
+
 				<a href="{{ path('app_games_new') }}">Enregistrer un Nouveau Jeu</a>
 			</div>
 		</div>

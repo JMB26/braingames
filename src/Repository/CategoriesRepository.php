@@ -43,18 +43,26 @@ class CategoriesRepository extends ServiceEntityRepository
      * @return Categories[] Returns an array of Categories objects by nom
      */
     public function findByCatNom($value): array
-    {
-        
+    {               
         return $this->createQueryBuilder('c')
             ->select('c.id')
             ->Where('c.nom = :val')
             ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult();
     }
 
+       /**
+        * @return Categories[] Returns an array of Categories objects order by nom
+        */
+       public function findAllOrderByNom(): array
+       {
+           return $this->createQueryBuilder('c')               
+               ->orderBy('c.nom', 'ASC')               
+               ->getQuery()
+               ->getResult()
+           ;
+       }
 
 
     //    /**
