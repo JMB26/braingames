@@ -18,7 +18,7 @@ class AdulteController extends AbstractController
      */
     public function index($ipag,CategoriesRepository $categoriesRepository, GamesRepository $gamesRepository, SwapRepository $swapRepository, Tools $tools, UserRepository $userRepository): Response
     {        
-
+        // pagination
         if ($ipag == null) {
             $ipag = 1;
         }   
@@ -26,8 +26,10 @@ class AdulteController extends AbstractController
         $pag = intval($gamesRepository->findGameAdultCount()[0][1] / 5) + 1;
 
         if ($ipag > $pag) {
-            $ipag = $pag;
+            $ipag = $pag;            
         }    
+        $pagdeb = 20 * intval(($ipag-1)/20)+1;
+
         $offset = ($ipag-1)*5;  
 
         $user = $tools->getUser();
@@ -98,7 +100,8 @@ class AdulteController extends AbstractController
             'seller' => $gamesell,
             'user' => $alluser,  
             'page' => $pag,
-            'ipage' => $ipag,          
+            'ipage' => $ipag, 
+            'pagedeb' => $pagdeb,           
         ]);       
     }
 }

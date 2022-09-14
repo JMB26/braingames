@@ -21,15 +21,18 @@ class HomeController extends AbstractController
      */
     public function index($ipag, CategoriesRepository $categoriesRepository, GamesRepository $gamesRepository, SwapRepository $swapRepository, Tools $tools, UserRepository $userRepository): Response
     {
-
+        
+        // pagination
         if ($ipag == null) {
-            $ipag = 1;
+            $ipag = 1;            
         }   
-        $pag = intval($gamesRepository->findGameCount()[0][1] / 5) + 1;
+        $pag = intval($gamesRepository->findGameCount()[0][1] / 5) + 1;          
 
         if ($ipag > $pag) {
             $ipag = $pag;
-        }
+        }    
+        $pagdeb = 20 * intval(($ipag-1)/20)+1;
+
 
         $user = $tools->getUser();
 
@@ -43,7 +46,9 @@ class HomeController extends AbstractController
             $games = $gamesRepository->findGameAllByFive($offset);
         } else {
             $iduser = 0;
-            $games = $gamesRepository->findAll();
+            // $games = $gamesRepository->findAll();
+            $offset = ($ipag-1)*5;           
+            $games = $gamesRepository->findGameAllByFive($offset);
         }
 
         $alluser = $userRepository->findAll();
@@ -83,8 +88,9 @@ class HomeController extends AbstractController
             }
         }
 
-
+       
         // $games = [];
+        
         return $this->render('home/index.html.twig', [
             // 'categories' => $categoriesRepository->findAll(),
             'categories' => $categoriesRepository->findAllOrderByNom(),
@@ -94,6 +100,7 @@ class HomeController extends AbstractController
             'user' => $alluser,
             'page' => $pag,
             'ipage' => $ipag,           
+            'pagedeb' => $pagdeb,           
         ]);
     }
 }

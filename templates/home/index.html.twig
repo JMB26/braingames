@@ -155,16 +155,35 @@
 					</tbody>
 				</table>
 
+				{# Pagination #}
 				<table>
 					<tr>
-						<td>
-						{% if ipage > 1 %}						
-							<a href="{{ path('app_home', {'ipag': ipage-1}) }}" class="text-decoration-none"><</a>&nbsp
-						{% endif %}
-						</td>										
+
+						{% if page <= 20 %}
+							<td>
+								{% if ipage > 1 %}						
+									<a href="{{ path('app_home', {'ipag': ipage-1}) }}" class="text-decoration-none"><</a>&nbsp
+								{% endif %}
+							</td>
+						{% else %}	
+							<td>
+							{# {{dump(page,ipage)}} #}
+								{% if ipage > 20 %}	
+									<a href="{{ path('app_home', {'ipag': ipage-20}) }}" class="text-decoration-none"><<</a>&nbsp
+								{% endif %}	
+							</td>
+						{% endif %}											
 						
 						{# Barre de page #}
-						{% for n in 1.. page %}
+
+
+						{% set pagefin = pagedeb + 19 %}
+
+						{% if page < pagefin %}
+							{% set pagefin = page %}
+						{% endif %}	
+
+						{% for n in pagedeb.. pagefin %}
 							{% if ipage == n %}
 								<td class="fs-3 font-weight-bold">{{n}}&nbsp</td> 
 							{% else %}						
@@ -172,11 +191,24 @@
 							{% endif %}	
 						{% endfor %}
 
-						<td>
-						{% if ipage <= page-1 %}	
-						 	<a href="{{ path('app_home', {'ipag': ipage+1}) }}" class="text-decoration-none">></a>&nbsp
+
+						{% if page <= 20 %}
+							<td>
+								{% if ipage <= page-1 %}	
+									<a href="{{ path('app_home', {'ipag': ipage+1}) }}" class="text-decoration-none">></a>&nbsp
+								{% endif %}	
+							</td>
+						{% else %}	
+							<td>
+								{% if ipage <= page-1 %}
+								{% if ipage+21 > page %}
+{% set ipage = page %}
+								{% endif %}
+
+									<a href="{{ path('app_home', {'ipag': ipage}) }}" class="text-decoration-none">>></a>&nbsp
+								{% endif %}	
+							</td>
 						{% endif %}	
-						</td>
 					</tr>
 				</table>
 

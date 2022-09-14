@@ -1,0 +1,22 @@
+PROBLEMES 
+
+- git add .
+warning: LF will be replaced by CRLF in .env.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in src/Controller/GamesController.php.
+The file will have its original line endings in your working directory 
+
+- html/css twig formulaire widget
+
+- d s u avec jointures 
+
+1) SET foreign_key_checks = 0 dans mysql
+2) dsu
+3) SET foreign_key_checks = 1 dans mysql
+
+
+- injecter dans bdd la date du jour ou la valeur par defaut via une form
+
+- createQueryBuilder : SELECT * FROM games left JOIN swap ON games.id = swap.idgameuser_id AND swap.iduser_id = 2 WHERE swap.idgameuser_id is  null;
+
+- Mailer -> Envoie rien & pas d'erreur ???
