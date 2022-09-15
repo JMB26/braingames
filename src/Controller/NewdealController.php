@@ -32,7 +32,6 @@ class NewdealController extends AbstractController
         if ($user != null) {
             // User Connecté      
 
-
             $form = $this->createForm(NewdealType::class);
 
             $form->handleRequest($request);
@@ -71,7 +70,6 @@ class NewdealController extends AbstractController
                             $swapRepository->add($swapsell, true);
 
                             $swapbuy->setIdswapbuyer($idswapsel);
-// dd($idswapsel,$swapbuy);
 
                             $swapRepository->add($swapbuy, true);  
                            

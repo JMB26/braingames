@@ -22,35 +22,35 @@ class HomeController extends AbstractController
     public function index($ipag, CategoriesRepository $categoriesRepository, GamesRepository $gamesRepository, SwapRepository $swapRepository, Tools $tools, UserRepository $userRepository): Response
     {
         
+        $user = $tools->getUser();
+
         // pagination
         if ($ipag == null) {
             $ipag = 1;            
         }   
-        $pag = intval($gamesRepository->findGameCount()[0][1] / 5) + 1;          
+        
+        if ($user != null) {
+            $iduser = $user->getId();
+            $pag = intval($gamesRepository->findGameCountUser($iduser)[0][1] / 5) + 1; 
+        }else{
+            $iduser = 0;   
+            $pag = intval($gamesRepository->findGameCount()[0][1] / 5) + 1;       
+        }
 
         if ($ipag > $pag) {
             $ipag = $pag;
         }    
         $pagdeb = 20 * intval(($ipag-1)/20)+1;
-
-
-        $user = $tools->getUser();
-
-        if ($user != null) {
-            $iduser = $user->getId();
-            // $games = $gamesRepository->findGameByNotUser($iduser);
-
-            // $games = $gamesRepository->findAll();                      
-
-            $offset = ($ipag-1)*5;           
-            $games = $gamesRepository->findGameAllByFive($offset);
+        $offset = ($ipag-1)*5;
+       
+        if ($user != null) {            
+            $games = $gamesRepository->findGameByNotUser($iduser,$offset); 
         } else {
-            $iduser = 0;
-            // $games = $gamesRepository->findAll();
+                    
             $offset = ($ipag-1)*5;           
-            $games = $gamesRepository->findGameAllByFive($offset);
+            $games = $gamesRepository->findGameAllByFive($offset);            
         }
-
+       
         $alluser = $userRepository->findAll();
 
         $dispo = [];
@@ -87,7 +87,6 @@ class HomeController extends AbstractController
                 array_push($dispo, $sw);
             }
         }
-
        
         // $games = [];
         

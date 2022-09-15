@@ -17,6 +17,4 @@ The file will have its original line endings in your working directory
 
 - injecter dans bdd la date du jour ou la valeur par defaut via une form
 
-- createQueryBuilder : SELECT * FROM games left JOIN swap ON games.id = swap.idgameuser_id AND swap.iduser_id = 2 WHERE swap.idgameuser_id is  null;
-
 - Mailer -> Envoie rien & pas d'erreur ???

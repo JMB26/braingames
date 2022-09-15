@@ -7,6 +7,8 @@ use App\Form\GamesType;
 use App\Services\Tools;
 use App\Form\GamesTypeMaj;
 use App\Repository\GamesRepository;
+use App\Repository\CategoriesRepository;
+use Doctrine\Migrations\Tools\Console\Command\StatusCommand;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -38,7 +40,7 @@ class GamesController extends AbstractController
     /**
      * @Route("/new", name="app_games_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, GamesRepository $gamesRepository,Tools $tools): Response
+    public function new(Request $request, GamesRepository $gamesRepository,CategoriesRepository $categoriesRepository,Tools $tools): Response
     {
 
         $user = $tools->getUser();
@@ -66,14 +68,21 @@ class GamesController extends AbstractController
                     $game->setImg('defaultImg.jpg');
                 }
 
+                // A setter : 
+                // - note 
+                // - Status
+                // - Date
+
                 $gamesRepository->add($game, true);
 
                 return $this->redirectToRoute('app_games_index', [], Response::HTTP_SEE_OTHER);
             }
 
+            // dd($game);
             return $this->renderForm('games/new.html.twig', [
+                'categories' => $categoriesRepository->findAllOrderByNom(),
                 'game' => $game,
-                'form' => $form,
+                'form' => $form,               
             ]);
         } else {
             // User non Connecté...

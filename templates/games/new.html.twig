@@ -9,15 +9,20 @@
 
     <a href="{{ path('app_games_index') }}">back to list</a> #}
 
+{# {{dump(form)}} #}
 
 <div class="container">
 		<div class="row justify-content-center">
 			<div class="fs-2 col-6 text-center m-3">
 				Saisie d'un Nouveau Jeu...
 			</div>
+
+			<div class="fs-2 col-6 text-center m-3">
+				{{ include('games/_form.html.twig') }}
+			</div>
 		</div>
 
-		{{ include('games/_form.html.twig') }}
+		
 
 		<div class="fs-6 text-center m-3">
 			<a href="{{ path('app_home') }}">Retour à la Liste des Jeux</a>

@@ -20,33 +20,60 @@ class EnfantController extends AbstractController
     {
 
         // pagination
-        if ($ipag == null) {
-            $ipag = 1;
-        }   
+        // if ($ipag == null) {
+        //     $ipag = 1;
+        // }   
         
-        $pag = intval($gamesRepository->findGameChildCount()[0][1] / 5) + 1;
+        // $pag = intval($gamesRepository->findGameChildCount()[0][1] / 5) + 1;
 
-        if ($ipag > $pag) {
-            $ipag = $pag;
-        }   
-        $pagdeb = 20 * intval(($ipag-1)/20)+1;
+        // if ($ipag > $pag) {
+        //     $ipag = $pag;
+        // }   
+        // $pagdeb = 20 * intval(($ipag-1)/20)+1;
         
-        $offset = ($ipag-1)*5;  
+        // $offset = ($ipag-1)*5;  
         
+        // $user = $tools->getUser();
+        // if ($user != null) {
+        //     $iduser = $user->getId(); 
+        //     $games = $gamesRepository-> findGameByChild($offset);                
+        // } else {
+        //     $iduser = 0;
+        //     $games = $gamesRepository->findGameByChild($offset);
+        // }
+
+        // $countgames = count($games);       
+
         $user = $tools->getUser();
+
+        // pagination
+        if ($ipag == null) {
+            $ipag = 1;            
+        }   
+        
         if ($user != null) {
             $iduser = $user->getId();
-            // $games = $gamesRepository->findGameByNotUser($iduser);
-            
-            $games = $gamesRepository-> findGameByChild($offset);                
-        } else {
-            $iduser = 0;
-            $games = $gamesRepository->findGameByChild($offset);
+            $pag = intval($gamesRepository->findGameCountChildUser($iduser)[0][1] / 5) + 1;             
+        }else{
+            $iduser = 0;   
+            $pag = intval($gamesRepository->findGameChildCount()[0][1] / 5) + 1;       
         }
-
-        $countgames = count($games);       
-
+     
+        if ($ipag > $pag) {
+            $ipag = $pag;
+        }    
+        $pagdeb = 20 * intval(($ipag-1)/20)+1;
+        $offset = ($ipag-1)*5;
+       
+        if ($user != null) {       
+            $games = $gamesRepository->findGameChildByNotUser($iduser,$offset);   
+        } else {
+                    
+            $offset = ($ipag-1)*5;           
+            $games = $gamesRepository->findGameByChild($offset);                  
+        }
         
+        $countgames = count($games);
 
         $alluser = $userRepository->findAll();
 

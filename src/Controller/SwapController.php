@@ -68,44 +68,54 @@ class SwapController extends AbstractController
         $swap = new Swap();
         $shape = new Shape();
 
-        $form = $this->createForm(SwapType::class, $swap);
-        $form->handleRequest($request);
+        // $form = $this->createForm(SwapType::class, $swap);
+        // $form->handleRequest($request);
 
+        if (isset($_POST['idshape'])) {
+           
+           
+            dump('idshape=',$_POST['idshape']);
+
+        }else{
+            dump('gloup');
+        }
         $user = $tools->getUser();
         if ($user != null) {
             // User connecté...
-            if ($form->isSubmitted() && $form->isValid()) {
+            // if ($form->isSubmitted() && $form->isValid()) {
+            if (isset($_POST['idshape'])) {
 
-                $idshape  = $request->request->get('idshape');
+                $idshape  =htmlspecialchars($_POST['idshape']);
+                // $idshape  = $request->request->get('idshape');
                 $shape = $shapeRepository->find($idshape);
                 $swap->setIdshape($shape);
 
-                $game = $gamesRepository->find($id);
-
-                dd('Game=', $id, $game);
+                $game = $gamesRepository->find($id);               
+dump($game);
 
                 $swap->setIdgameuser($game);
-
                 $swap->setSwapuser(false);
                 $swap->setSwapbuyer(false);
-
-
                 $swap->setIduser($user);
-
                 $swap->setIdbuyer(null);
                 $swap->setIdswapbuyer(null);
 
-
+             
                 $swapRepository->add($swap, true);
 
-                return $this->redirectToRoute('app_swap_index', [], Response::HTTP_SEE_OTHER);
+                
+                
+                return $this->redirectToRoute('app_swap_index', [], Response::HTTP_SEE_OTHER);              
             }
-
+          
+     
+            
             return $this->renderForm('swap/new.html.twig', [
                 'game' => $gamesRepository->find($id),
                 'shapes' => $shapeRepository->findAll(),
                 'swap' => $swap,
-                'form' => $form,
+                // 'form' => $form,
+                'id'=> $id,
             ]);
         } else {
             // User non Connecté...

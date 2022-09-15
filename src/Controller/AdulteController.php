@@ -19,40 +19,74 @@ class AdulteController extends AbstractController
     public function index($ipag,CategoriesRepository $categoriesRepository, GamesRepository $gamesRepository, SwapRepository $swapRepository, Tools $tools, UserRepository $userRepository): Response
     {        
         // pagination
-        if ($ipag == null) {
-            $ipag = 1;
-        }   
+        // if ($ipag == null) {
+        //     $ipag = 1;
+        // }   
         
-        $pag = intval($gamesRepository->findGameAdultCount()[0][1] / 5) + 1;
+        // $pag = intval($gamesRepository->findGameAdultCount()[0][1] / 5) + 1;
 
-        if ($ipag > $pag) {
-            $ipag = $pag;            
-        }    
-        $pagdeb = 20 * intval(($ipag-1)/20)+1;
+        // if ($ipag > $pag) {
+        //     $ipag = $pag;            
+        // }    
+        // $pagdeb = 20 * intval(($ipag-1)/20)+1;
 
-        $offset = ($ipag-1)*5;  
+        // $offset = ($ipag-1)*5;  
 
+        // $user = $tools->getUser();
+
+        // if ($user != null) {
+        //     $iduser = $user->getId();          
+        //     $games = $gamesRepository-> findGameByAdult($offset);                
+        // } else {
+        //     $iduser = 0;
+        //     $games = $gamesRepository->findGameByAdult($offset);
+        // }
+                  
+        // $countgames = count($games);       
+
+        // if ($ipag == null) {
+        //     $ipag = 1;
+        // }   
+        // $pag = intval(($countgames/5)+1);
+
+        // if ($ipag > $pag) {
+        //     $ipag = $pag;
+        // } 
+        
+        
         $user = $tools->getUser();
 
+        // pagination
+        if ($ipag == null) {
+            $ipag = 1;            
+        }   
+        
         if ($user != null) {
             $iduser = $user->getId();
-            // $games = $gamesRepository->findGameByNotUser($iduser);
-            $games = $gamesRepository-> findGameByAdult($offset);                
-        } else {
-            $iduser = 0;
-            $games = $gamesRepository->findGameByAdult($offset);
+            $pag = intval($gamesRepository->findGameCountAdultUser($iduser)[0][1] / 5) + 1; 
+        }else{
+            $iduser = 0;   
+            $pag = intval($gamesRepository->findGameAdultCount()[0][1] / 5) + 1;       
         }
-                  
-        $countgames = count($games);       
-
-        if ($ipag == null) {
-            $ipag = 1;
-        }   
-        $pag = intval(($countgames/5)+1);
-
+     
         if ($ipag > $pag) {
             $ipag = $pag;
-        }      
+        }    
+        $pagdeb = 20 * intval(($ipag-1)/20)+1;
+        $offset = ($ipag-1)*5;
+       
+        if ($user != null) {            
+            // $games = $gamesRepository->findGameByNotUser($iduser,$offset); 
+            $games = $gamesRepository->findGameAdultByNotUser($iduser,$offset);   
+        } else {
+                    
+            $offset = ($ipag-1)*5;           
+            $games = $gamesRepository->findGameByAdult($offset);
+            // $games = $gamesRepository->findGameByNotUser($iduser,$offset);             
+        }
+
+        // dd($games);
+        $countgames = count($games);
 
         $alluser = $userRepository->findAll();
 
@@ -60,6 +94,7 @@ class AdulteController extends AbstractController
         $gamesell = [];
         $sell = [];
        
+        // dd($countgames);
 
         // dump($gamesell,$sell);
         for ($i = 0; $i < $countgames; $i++) {

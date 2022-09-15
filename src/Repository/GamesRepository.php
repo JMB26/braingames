@@ -72,22 +72,21 @@ class GamesRepository extends ServiceEntityRepository
             ->andWhere('s.id = :val')
             ->setParameter('val', $value)
             ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
+            ->setMaxResults(5)
             ->getQuery()
             ->getResult();
     }
 
     /**
-     * @return Game[] Returns an array of Game objects by Adulte
+     * @return Game[] Returns an array of adult Game objects 
      */
     public function findGameByAdult($offset): array
-    {
-        // dd($value);
+    {       
         $value = 17;
         return $this->createQueryBuilder('g')           
             ->andWhere('g.age > :val')
             ->setParameter('val', $value)
-            ->orderBy('g.age', 'ASC')
+            ->orderBy('g.id', 'ASC')
             ->setMaxResults(5)
             ->setFirstResult($offset)
             ->getQuery()
@@ -96,16 +95,13 @@ class GamesRepository extends ServiceEntityRepository
 
 
     /**
-     * @return Game[] Returns an array of Game objects by Adulte
+     * @return Game[] Returns an array of Children Game objects 
      */
     public function findGameByChild($offset): array
-    {
-        // dd($value);
-        $value = 18;
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.age < :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.age', 'ASC')
+    {       
+        return $this->createQueryBuilder('g')
+            ->andWhere('g.age < 18')            
+            ->orderBy('g.age', 'ASC')
             ->setMaxResults(5)
             ->setFirstResult($offset)
             ->getQuery()
@@ -117,17 +113,49 @@ class GamesRepository extends ServiceEntityRepository
     /**
      * @return Game[] Returns an array of Game objects by User
      */
-    public function findGameByNotUser($value): array
-    {          
-            return $this->createQueryBuilder('games')   
-            ->addSelect('s')  
-            ->leftJoin('games.swap', 's')
-            ->where('s.idgameuser = :val')            
+    public function findGameByNotUser($value,$offset): array
+    {               
+            return $this->createQueryBuilder('g')              
+            ->leftJoin(Swap::class, 's', 'WITH', 'g.id = s.idgameuser AND s.iduser = :val')
+            ->where('s.idgameuser is null')            
             ->setParameter('val', $value)
-            ->orderBy('games.id', 'ASC')
-            ->setMaxResults(10)
+            ->orderBy('g.id', 'ASC')
+            ->setMaxResults(5)
+            ->setFirstResult($offset)
             ->getQuery()            
-            ->getResult();         
+            ->getResult();      
+    }
+
+    /**
+     * @return Game[] Returns an array of Game objects by User
+     */
+    public function findGameAdultByNotUser($value,$offset): array
+    {               
+            return $this->createQueryBuilder('g')              
+            ->leftJoin(Swap::class, 's', 'WITH', 'g.id = s.idgameuser AND s.iduser = :val')
+            ->where('s.idgameuser is null AND g.age > 17')            
+            ->setParameter('val', $value)
+            ->orderBy('g.id', 'ASC')
+            ->setMaxResults(5)
+            ->setFirstResult($offset)
+            ->getQuery()            
+            ->getResult();      
+    }
+
+    /**
+     * @return Game[] Returns an array of Game objects by User
+     */
+    public function findGameChildByNotUser($value,$offset): array
+    {               
+            return $this->createQueryBuilder('g')              
+            ->leftJoin(Swap::class, 's', 'WITH', 'g.id = s.idgameuser AND s.iduser = :val')
+            ->where('s.idgameuser is null AND g.age < 18')            
+            ->setParameter('val', $value)
+            ->orderBy('g.id', 'ASC')
+            ->setMaxResults(5)
+            ->setFirstResult($offset)
+            ->getQuery()            
+            ->getResult();      
     }
 
     /**
@@ -139,7 +167,7 @@ class GamesRepository extends ServiceEntityRepository
             ->andWhere('g.idcat = :val')
             ->setParameter('val', $value)
             ->orderBy('g.id', 'ASC')
-            ->setMaxResults(10)
+            ->setMaxResults(5)
             ->getQuery()
             ->getResult();       
     }
@@ -164,6 +192,20 @@ class GamesRepository extends ServiceEntityRepository
             ->select('count(g.id)')            
             ->getQuery()
             ->getResult();       
+    }
+
+    /**
+     * @return Game[] Returns an count of all Game objects by User
+     */
+    public function findGameCountUser($value): array
+    {               
+            return $this->createQueryBuilder('g')  
+            ->select('count(g.id)')           
+            ->leftJoin(Swap::class, 's', 'WITH', 'g.id = s.idgameuser AND s.iduser = :val')
+            ->where('s.idgameuser is null')            
+            ->setParameter('val', $value)            
+            ->getQuery()            
+            ->getResult();      
     }
    
     /**
@@ -194,16 +236,36 @@ class GamesRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @return Game[] Returns an count of all Adult Game objects by User
+     */
+    public function findGameCountAdultUser($value): array
+    {  
+            return $this->createQueryBuilder('g')  
+            ->select('count(g.id)')           
+            ->leftJoin(Swap::class, 's', 'WITH', 'g.id = s.idgameuser AND s.iduser = :val')
+            ->where('s.idgameuser is null AND g.age > 17')            
+            ->setParameter('val', $value)                      
+            ->getQuery()            
+            ->getResult();      
+    }
 
-
-
-
-    // ->addSelect('r') 
-    // ->leftJoin('e.relatedEntity', 'r')
-    // ->where('r.foo = :parameter')
-    // ->setParameter('parameter', $parameter)
-    // ->getQuery();
-
+    /**
+     * @return Game[] Returns an count of all Children Game objects by User
+     */
+    public function findGameCountChildUser($value): array
+    {  
+        // dd('find',$value);
+            return $this->createQueryBuilder('g')  
+            ->select('count(g.id)')           
+            ->leftJoin(Swap::class, 's', 'WITH', 'g.id = s.idgameuser AND s.iduser = :val')
+            ->where('s.idgameuser is null AND g.age < 18')            
+            ->setParameter('val', $value)                      
+            ->getQuery()            
+            ->getResult();      
+    }
+   
+   
     //    /**
     //     * @return Games[] Returns an array of Games objects
     //     */

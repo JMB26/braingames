@@ -1,26 +1,69 @@
-{{ form_start(form) }}
+{{dump(categories)}}
 
-	{{ form_widget(form) }}
+<form class="fs-4 text-center" action="{{ path('app_games_new') }}" method="POST">
 
-	{% if form.img.vars.data is defined and form.img.vars.data is not null %}
-		<label for="">Image Actuelle</label>
-		<div><img src="{{ asset('images-test/' ~ game.img ) }}" alt="" style="width:100px"></div>
-		<div class="fs-6">
-			{{form.img.vars.data}}
+	<label for="fname">Marque/fabricant</label><br>
+	<input type="text" id="fname" name="fname" value="John"><br>
+	<label for="lname">Nom</label><br>
+	<input type="text" id="lname" name="lname" value="Doe"><br><br>
+	<label for="lname">Code ISBN</label><br>
+	<input type="text" id="lname" name="lname" value="Doe"><br><br>
+	<label for="lname">Age recommandé</label><br>
+	<input type="text" id="lname" name="lname" value="Doe"><br><br>
+	<label for="lname">Description</label><br>
+	<textarea name="" id="" cols="30" rows="5"></textarea><br><br>
+
+
+	<div class="d-flex fs-6 justify-content-around">
+		<div>
+			<label for="">Image Actuelle</label><br>
+			{% if game.img is defined and game.img is not null %}
+				<img src="{{ asset('images-test/' ~ game.img ) }}" alt="" style="width:100px"><br><br>
+			{% else %}
+				<img src="{{ asset('images-test/defaultImg.jpg') }}" alt="" style="width:100px"><br><br>
+			{% endif %}
 		</div>
-	{% else %}
-		<label for="">Image Actuelle par Défaut</label>
-		<div><img src="{{ asset('images-test/defaultImg.jpg') }}" alt="" style="width:100px"></div>
-		<div class="fs-6">
-			{{form.img.vars.data}}
+
+		<div>
+			<label for="">Charger une autre image</label><br>
+			<input type="text" id="lname" name="lname" value="Doe"><br><br>
 		</div>
-
-	{% endif %}
-
-
-	<div class="text-center">
-		<button class="btn text-center">
-			{{ button_label|default('Enregistrer') }}
-		</button>
 	</div>
+
+	<div class="d-flex fs-6 justify-content-center">
+	<label for="lname">Type de Jeu</label><br>
+	<div class="fs-5 col-6 text-center m-0">		
+			<select name="idcat" id="idcat">
+				{% for cat in categories %}
+					<option value="{{ cat.id }}">{{ cat.nom }}</option>
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+
+
+	{# <button type="submit" class="btn fs-4">{{ button_label|default('Enregistrer ce Nouveau Jeu') }}</button> #}
+</form>
+
+
+{{ form_start(form) }}
+{#		{% if form.img.vars.data is defined and form.img.vars.data is not null %}
+					<label for="">Image Actuelle</label>
+					<div><img src="{{ asset('images-test/' ~ game.img ) }}" alt="" style="width:100px"></div>
+					<div class="fs-6">
+						{{form.img.vars.data}}
+					</div>
+				{% else %}
+					<label for="">Image Actuelle par Défaut</label>
+					<div><img src="{{ asset('images-test/defaultImg.jpg') }}" alt="" style="width:100px"></div>
+					<div class="fs-6">
+						{{form.img.vars.data}}
+					</div>
+				{% endif %}
+			
+				<div class="text-center">
+					<button class="btn text-center">
+						{{ button_label|default('Enregistrer') }}
+					</button>
+				</div>#}
 {{ form_end(form) }}

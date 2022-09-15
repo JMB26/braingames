@@ -125,13 +125,14 @@
 																<select class="fs-6" name="seller" id="seller">
 																	{% for n in 0.. dispos[i]|length-1 %}
 																		{% if seller[k][n] is defined %}
-																			<div class="fs-6">
-																				<option value="{{dispos[i][n].id}}">
-																					{{user[seller[k][n]-1].cpost}}
-																					{{user[seller[k][n]-1].ville}}
-																					{{dispos[i][n].idswapbuyer}}
-																				</option>
-																			</div>
+																			{% if dispos[i][n].idswapbuyer == null  %}
+																				<div class="fs-6">
+																					<option value="{{dispos[i][n].id}}">
+																						{{user[seller[k][n]-1].cpost}}
+																						{{user[seller[k][n]-1].ville}}																						
+																					</option>
+																				</div>
+																			{% endif %}
 																		{% endif %}
 																	{% endfor %}
 																</select>
