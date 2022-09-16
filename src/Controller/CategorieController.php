@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 
 use App\Services\Tools;
@@ -7,7 +6,6 @@ use App\Repository\SwapRepository;
 use App\Repository\UserRepository;
 use App\Repository\GamesRepository;
 use App\Repository\CategoriesRepository;
-use Doctrine\ORM\Mapping\Id;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,44 +13,62 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CategorieController extends AbstractController
 {
     /**
-     * @Route("/categorie/{cat}", name="app_categorie", defaults={"cat": null})
+     * @Route("/categorie/{cat}/{ipag}", name="app_categorie", defaults={"cat": null,"ipag": null})
      */
-    public function index($cat, CategoriesRepository $categoriesRepository, GamesRepository $gamesRepository, SwapRepository $swapRepository, Tools $tools, UserRepository $userRepository): Response
+    public function index($ipag,$cat,CategoriesRepository $categoriesRepository, GamesRepository $gamesRepository, SwapRepository $swapRepository, Tools $tools, UserRepository $userRepository): Response
     {
 
-        
+
         if ($cat == null) {
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 
         $user = $tools->getUser();
 
-        $categ = $categoriesRepository->findByCatNom($cat);
-
-        if ($user != null) {
-            $iduser = $user->getId();
-            // $games = $gamesRepository->findGameByCategNotUser($iduser,$cat);
-            if ($categ != null) {
-                $games = $gamesRepository->findGameByCateg($categ[0]['id']);
-            } else {
-                $games = [];
-            }
-        } else {
-            $iduser = 0;
-            if ($categ != null) {
-                $games = $gamesRepository->findGameByCateg($categ[0]['id']);
-            } else {
-                $games = [];
-            }
+       
+        // pagination
+        if ($ipag == null) {
+            $ipag = 1;
         }
 
+        if ($user != null) {
+            $iduser = $user->getId();            
+            $pag = intval($gamesRepository->findGameCountCatUser($iduser,$cat)[0][1] / 5) + 1;
+        } else {
+            $iduser = 0;
+           
+            $pag = intval($gamesRepository->findGameCatCount($cat)[0][1] / 5) + 1;
+        }
+                
+        if ($ipag > $pag) {
+            $ipag = $pag;
+        }
+
+        $pagdeb = 20 * intval(($ipag - 1) / 20) + 1;
+        $offset = ($ipag - 1) * 5;
+
+        if ($user != null) {
+            $games = $gamesRepository->findGameCatByNotUser($iduser,$cat, $offset);
+        } else {
+
+            $offset = ($ipag - 1) * 5;
+            $games = $gamesRepository->findGameByCateg($cat,$offset);           
+        }
+        
+        $countgames = count($games);
+
+
+        $categ = $categoriesRepository->findByCatNom($cat);
+
+      
         $alluser = $userRepository->findAll();
 
         $dispo = [];
         $gamesell = [];
-        $sell = [];
+        $sell = [];        
 
-        for ($i = 0; $i < count($games); $i++) {
+        for ($i = 0; $i < $countgames; $i++) {    
+            
             $idgame = $games[$i]->getid();
             $sw = $swapRepository->findByGame($idgame);
 
@@ -80,9 +96,7 @@ class CategorieController extends AbstractController
                 array_push($dispo, $sw);
             }
         }
-
-        
-        // $games = [];
+       
         return $this->render('categorie/index.html.twig', [
             'categories' => $categoriesRepository->findAll(),
             'games' => $games,
@@ -90,16 +104,16 @@ class CategorieController extends AbstractController
             'seller' => $gamesell,
             'user' => $alluser,
             'categ' => $cat,
+            'page' => $pag,
+            'ipage' => $ipag,
+            'pagedeb' => $pagdeb,
         ]);
     }
 
     public function navcateg(CategoriesRepository $categoriesRepository)
-    {    
-
-        // dd($categoriesRepository->findAllOrderByNom());
-        return $this->render('include/navcateg.html.twig', [            
-            'navcat' => $categoriesRepository->findAllOrderByNom(),            
+    {       
+        return $this->render('include/navcateg.html.twig', [
+            'navcat' => $categoriesRepository->findAllOrderByNom(),
         ]);
     }
-
 }

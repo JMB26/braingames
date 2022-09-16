@@ -42,7 +42,7 @@ class GamesController extends AbstractController
      */
     public function new(Request $request, GamesRepository $gamesRepository,CategoriesRepository $categoriesRepository,Tools $tools): Response
     {
-
+      
         $user = $tools->getUser();
 
         if ($user != null) {

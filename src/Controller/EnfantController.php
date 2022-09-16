@@ -17,32 +17,7 @@ class EnfantController extends AbstractController
      * @Route("/enfant/{ipag}", name="app_enfant", defaults={"ipag": null})
      */
     public function index($ipag,CategoriesRepository $categoriesRepository, GamesRepository $gamesRepository, SwapRepository $swapRepository, Tools $tools, UserRepository $userRepository): Response
-    {
-
-        // pagination
-        // if ($ipag == null) {
-        //     $ipag = 1;
-        // }   
-        
-        // $pag = intval($gamesRepository->findGameChildCount()[0][1] / 5) + 1;
-
-        // if ($ipag > $pag) {
-        //     $ipag = $pag;
-        // }   
-        // $pagdeb = 20 * intval(($ipag-1)/20)+1;
-        
-        // $offset = ($ipag-1)*5;  
-        
-        // $user = $tools->getUser();
-        // if ($user != null) {
-        //     $iduser = $user->getId(); 
-        //     $games = $gamesRepository-> findGameByChild($offset);                
-        // } else {
-        //     $iduser = 0;
-        //     $games = $gamesRepository->findGameByChild($offset);
-        // }
-
-        // $countgames = count($games);       
+    {      
 
         $user = $tools->getUser();
 
@@ -57,11 +32,12 @@ class EnfantController extends AbstractController
         }else{
             $iduser = 0;   
             $pag = intval($gamesRepository->findGameChildCount()[0][1] / 5) + 1;       
-        }
+        }       
      
         if ($ipag > $pag) {
             $ipag = $pag;
-        }    
+        }   
+
         $pagdeb = 20 * intval(($ipag-1)/20)+1;
         $offset = ($ipag-1)*5;
        
@@ -74,15 +50,13 @@ class EnfantController extends AbstractController
         }
         
         $countgames = count($games);
-
+     
         $alluser = $userRepository->findAll();
 
         $dispo = [];
         $gamesell = [];
-        $sell = [];
+        $sell = [];      
        
-
-        // dump($gamesell,$sell);
         for ($i = 0; $i < $countgames; $i++) {
             $idgame = $games[$i]->getid();
             $sw = $swapRepository->findByGame($idgame);

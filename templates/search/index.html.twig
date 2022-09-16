@@ -59,24 +59,12 @@
 										<a class="nav-link fs-6 text-black-50" title="Voir le descriptif complet de ce jeu ?" href="detail">{{ game.txt }}</a>
 									</td>
 									<td>Très bon</td>
-									<td>+ de {{ game.age }}</td>
+									<td>{{ game.age }}+</td>
 									<td>
 										<a class="nav-link fs-6 text-black-50" title="Proposer un échange ?" href="echange">Disponible</a>
 										<a class="nav-link fs-6 text-black-50" title="des questions sur ce jeu ?" href="contact">Contact</a>
 									</td>
 								</tr>
-
-
-                                        {# <div>
-                                            class="mt-3 p-3 bg-light border rounded">
-                                            <a href="{{ path('game_show', {'slug': game.slug}) }}">
-                                                <h6 class="text-dark">
-                                                    <i class="bi bi-arrow-down-right-square-fill text-primary">{{ game.mark }}
-                                                        -
-                                                    </i>
-                                                    {{ game.nom }}</h6>
-                                            </a>
-                                        </div> #}
 
 							{% endfor %}
 

@@ -49,7 +49,7 @@
 							<td>{{ game.txt|u.truncate(15) }}...</td>
 
 							<td>Etat...</td>
-							<td>{{ game.age }}</td>
+							<td>{{ game.age }}+</td>
 
 						</tr>
 
@@ -78,42 +78,42 @@
 
 
 	{# <div class="container">
-						<div class="row justify-content-center">
-							<div class="fs-3 col-6 text-center m-4">
-								Ajouter un nouveau jeu à vos echanges...
+							<div class="row justify-content-center">
+								<div class="fs-3 col-6 text-center m-4">
+									Ajouter un nouveau jeu à vos echanges...
+								</div>
 							</div>
-						</div>
-					</div>	
-				
-						<div class="row justify-content-center">
-							<div class="fs-4 col-12 text-center m-3">
-				
-								<table class="table fs-5">
-									<thead>
-										<tr class="text-center">
-											<th>#</th>
-											<th>Marque</th>
-											<th>Nom</th>
-											<th>Isbn</th>
-											<th>Age</th>
-											<th>Photo</th>
-											<th>Description</th>
-											<th>Note</th>
-											<th>statut</th>
-											<th>Date</th>
-											<th>actions</th>
-										</tr>
-									</thead>
-									<tbody>
-									
-											<tr>								
-												<td>{{ id }}</td> #}
+						</div>	
+					
+							<div class="row justify-content-center">
+								<div class="fs-4 col-12 text-center m-3">
+					
+									<table class="table fs-5">
+										<thead>
+											<tr class="text-center">
+												<th>#</th>
+												<th>Marque</th>
+												<th>Nom</th>
+												<th>Isbn</th>
+												<th>Age</th>
+												<th>Photo</th>
+												<th>Description</th>
+												<th>Note</th>
+												<th>statut</th>
+												<th>Date</th>
+												<th>actions</th>
+											</tr>
+										</thead>
+										<tbody>
+										
+												<tr>								
+													<td>{{ id }}</td> #}
 
 
 {# <td>{{ game.mark }}</td>
 								<td>{{ game.nom }}</td>
 								<td>{{ game.isbn }}</td>
-								<td>{{ game.age }}</td>
+								<td>{{ game.age }}+</td>
 								<td>
 									{% if game.img is defined and game.img is not null %}
 										<img src="{{ asset('images-test/' ~ game.img ) }}" alt="" style="width:100px">
@@ -131,14 +131,14 @@
 									<a href="{{ path('app_games_show', {'id': game.id}) }}">Supprimer</a>
 								</td> #}
 	{# </tr>
-										
-									</tbody>
-								</table>
-				
-								<a href="{{ path('app_games_new') }}">Enregistrer un nouveau Jeu</a>
-				
+											
+										</tbody>
+									</table>
+					
+									<a href="{{ path('app_games_new') }}">Enregistrer un nouveau Jeu</a>
+					
+								</div>
 							</div>
-						</div>
-					</div> #}
+						</div> #}
 
 {% endblock %}

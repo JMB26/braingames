@@ -67,36 +67,41 @@ function NewImgView() {
 </script> #}
 
 <div class="fs-5 justify-content-start">
-{{ form_start(form) }}
-{{ form_label(form.mark, 'Marque/fabricant') }}
-{{ form_widget(form.mark) }}
-{{ form_label(form.nom, 'Nom du Jeu') }}
-{{ form_widget(form.nom) }}
-{{ form_label(form.isbn, 'Numéro ISBN') }}
-{{ form_widget(form.isbn) }}
-{{ form_label(form.idcat, 'Type de jeu') }}
-{{ form_widget(form.idcat) }}
-{{ form_label(form.txt, 'Description') }}
-{{ form_widget(form.txt) }}
+	{{ form_start(form) }}
+	{{ form_label(form.mark, 'Marque/fabricant') }}
+	{{ form_widget(form.mark) }}
+	{{ form_label(form.nom, 'Nom du Jeu') }}
+	{{ form_widget(form.nom) }}
+	{{ form_label(form.isbn, 'Numéro ISBN') }}
+	{{ form_widget(form.isbn) }}
+	{{ form_label(form.idcat, 'Type de jeu') }}
+	{{ form_widget(form.idcat) }}
+	{{ form_label(form.txt, 'Description') }}
+	{{ form_widget(form.txt) }}
 
-{{ form_label(form.age, 'Age, recommandé à partir de :') }}
-{{ form_widget(form.age) }}
+	{{ form_label(form.age, 'Age, recommandé à partir de :') }}
+	{{ form_widget(form.age) }}
 
-{{ form_row(form.img) }}
-{% if form.img.vars.data is defined and form.img.vars.data is not null %}
-	<label for="">Image Actuelle</label>
-	<div><img src="{{ asset('images-test/' ~ game.img ) }}" alt="" style="width:100px"></div>
-	<div class="fs-6">
-		{{form.img.vars.data}}
-	</div>
-{% else %}
-	<label for="">Image Actuelle par Défaut</label>
-	<div><img src="{{ asset('images-test/defaultImg.jpg') }}" alt="" style="width:100px"></div>
-	<div class="fs-6">
-		{{form.img.vars.data}}
-	</div>
-{% endif %}
+	{{ form_row(form.img) }}
+	{% if form.img.vars.data is defined and form.img.vars.data is not null %}
+		<label for="">Image Actuelle</label>
+		<div><img src="{{ asset('images-test/' ~ game.img ) }}" alt="" style="width:100px"></div>
+		<div class="fs-6">
+			{{form.img.vars.data}}
+		</div>
+	{% else %}
+		<label for="">Image Actuelle par Défaut</label>
+		<div><img src="{{ asset('images-test/defaultImg.jpg') }}" alt="" style="width:100px"></div>
+		<div class="fs-6">
+			{{form.img.vars.data}}
+		</div>
+	{% endif %}
 
+    {{ form_label(form.note, 'Notation') }}
+    {{ form_widget(form.note) }}
+
+    {{ form_label(form.status, 'Status de Publication') }}
+    {{ form_widget(form.status) }}
 </div>
 
 

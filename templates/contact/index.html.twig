@@ -5,9 +5,9 @@
 
 {% block body %}
 
-{# {{dump(etatgame)}}
-{{dump(game)}}
-	 #}
+	{# {{dump(etatgame)}}
+	{{dump(game)}}
+		 #}
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="fs-3 col-6 text-center m-3">
@@ -50,7 +50,7 @@
 							<td>{{ game.txt|u.truncate(15) }}...</td>
 
 							<td>{{ etatgame}}</td>
-							<td>{{ game.age }}</td>
+							<td>{{ game.age }}+</td>
 
 							<td>
 								<div>
@@ -58,9 +58,9 @@
 								</div>
 								<div>
 									{# {{ selluser.cpost}}
-									{{ selluser.ville}} #}
+																		{{ selluser.ville}} #}
 								</div>
-								
+
 							</td>
 						</tr>
 					</tbody>
@@ -74,7 +74,7 @@
 					</div>
 
 					{{ form(contactform) }}
-					
+
 					</div>
 				</div>
 			</div>

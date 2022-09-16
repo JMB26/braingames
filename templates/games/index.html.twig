@@ -38,7 +38,7 @@
 								<td>{{ game.mark }}</td>
 								<td>{{ game.nom }}</td>
 								<td>{{ game.isbn }}</td>
-								<td>{{ game.age }}</td>
+								<td>{{ game.age }}+</td>
 								<td>
 									{% if game.img is defined and game.img is not null %}
 										<img src="{{ asset('images-test/' ~ game.img ) }}" alt="" style="width:100px">
@@ -49,31 +49,29 @@
 								</td>
 								<td>{{ game.txt|u.truncate(15) }}...</td>
 								<td>{{ game.note }}</td>
-								<td>	
-										{% if (game.status == 0) %}										
-											Hors Ligne											
-										{% else %}		
-											En ligne
-										{% endif %}
-									</select>
-								</td>
-								<td>{{ game.date ? game.date|date('d-m-Y') : '' }}</td>
 								<td>
-									<a href="{{ path('app_games_edit', {'id': game.id}) }}">Modifier</a>
-									<a href="{{ path('app_games_show', {'id': game.id}) }}">Supprimer</a>
+									{% if (game.status == 0) %}
+										Hors Ligne
+									{% else %}
+										En ligne
+									{% endif %}
 								</td>
 							</tr>
-						{% else %}
-							<tr>
-								<td colspan="11">Aucun produit trouvé</td>
-							</tr>
-						{% endfor %}
+						</select>
 					</tbody>
-				</table>
+				</td>
+				<td>{{ game.date ? game.date|date('d-m-Y') : '' }}</td>
+				<td>
+					<a href="{{ path('app_games_edit', {'id': game.id}) }}">Modifier</a>
+					<a href="{{ path('app_games_show', {'id': game.id}) }}">Supprimer</a>
+				</td>
+			</tr>
+		{% else %}
+			<tr>
+				<td colspan="11">Aucun produit trouvé</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
 
-				<a href="{{ path('app_games_new') }}">Enregistrer un nouveau Jeu</a>
-
-			</div>
-		</div>
-	</div>
-{% endblock %}
+<a href="{{ path('app_games_new') }}">Enregistrer un nouveau Jeu</a></div></div></div>{% endblock %}

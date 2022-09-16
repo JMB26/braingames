@@ -1,10 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Swap{% endblock %}
+{% block title %}New Swap
+{% endblock %}
 
 {% block body %}
 
-    <div class="container">
+	<div class="container">
 		<div class="row justify-content-center">
 			<div class="fs-2 col-6 text-center m-3">
 				Ajouter ce jeu à vos echanges...
@@ -28,36 +29,28 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td>								
-									{% if game.img is defined and game.img is not null %}
-										<img src="{{ asset('images-test/' ~ game.img ) }}" alt="" style="width:100px">
-									{% else %}
-										<img src="{{ asset('images-test/defaultImg.jpg') }}" alt="" style="width:100px">
-									{% endif %}
-								</a>
+							<td>
+								{% if game.img is defined and game.img is not null %}
+									<img src="{{ asset('images-test/' ~ game.img ) }}" alt="" style="width:100px">
+								{% else %}
+									<img src="{{ asset('images-test/defaultImg.jpg') }}" alt="" style="width:100px">
+								{% endif %}
 							</td>
-
-							<td>{{ game.mark }}</td>
-							<td>{{ game.nom }}</td>
-							<td>{{game.idcat.nom}}</td>
-
-							<td>{{ game.txt|u.truncate(15) }}...</td>
-
-							<td>Etat...</td>
-							<td>{{ game.age }}</td>
 						</tr>
-
 					</tbody>
-				</table>
-			</div>
-			
-			{{ include('swap/_form.html.twig') }}
+				</a>
+			</td>
 
-			<div class="fs-4 col-12 text-center m-3">
-				<a href="{{ path('app_swap_index') }}">Retour à la liste des Echanges</a>
-			</div>
-			
-		</div>
-	</div>
-   
-{% endblock %}
+			<td>{{ game.mark }}</td>
+			<td>{{ game.nom }}</td>
+			<td>{{game.idcat.nom}}</td>
+
+			<td>{{ game.txt|u.truncate(15) }}...</td>
+
+			<td>Etat...</td>
+			<td>{{ game.age }}+</td>
+		</tr>
+
+	</tbody>
+</table></div>{{ include('swap/_form.html.twig') }}<div class="fs-4 col-12 text-center m-3">
+<a href="{{ path('app_swap_index') }}">Retour à la liste des Echanges</a></div></div></div>{% endblock %}

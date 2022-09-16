@@ -86,6 +86,7 @@ class Games
     {
         $this->swaps = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->date = new \DateTime('now');
     }
 
     public function getId(): ?int

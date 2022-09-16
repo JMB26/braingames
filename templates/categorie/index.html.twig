@@ -53,7 +53,7 @@
 
 								<td>{{ game.txt|u.truncate(15) }}...</td>
 
-								<td>{{ game.age }}</td>
+								<td>{{ game.age }}+</td>
 								<td>
 
 									{% if dispos[i]|length == 0  %}
@@ -116,6 +116,62 @@
 						{% endfor %}
 					</tbody>
 				</table>
+
+	{# Pagination #}
+				<table>
+					<tr>
+
+						{% if page <= 20 %}
+							<td>
+								{% if ipage > 1 %}						
+									<a href="{{ path('app_categorie', {'cat': categ , 'ipag': ipage-1}) }}" class="text-decoration-none"><</a>&nbsp
+								{% endif %}
+							</td>
+						{% else %}	
+							<td>							
+								{% if ipage > 20 %}	
+									<a href="{{ path('app_categorie', {'cat': categ , 'ipag': ipage-20}) }}" class="text-decoration-none"><<</a>&nbsp
+								{% endif %}	
+							</td>
+						{% endif %}											
+						
+						{# Barre de page #}
+						{% set pagefin = pagedeb + 19 %}
+
+						{% if page < pagefin %}
+							{% set pagefin = page %}
+						{% endif %}	
+
+						{% for n in pagedeb.. pagefin %}
+							{% if ipage == n %}
+								<td class="fs-3 font-weight-bold">{{n}}&nbsp</td> 
+							{% else %}						
+								<td><a class="fs-5" href="{{ path('app_categorie', {'cat': categ , 'ipag': n}) }}">{{n}}</a>&nbsp</td> 								                   
+							{% endif %}	
+						{% endfor %}
+
+
+						{% if page <= 20 %}
+							<td>
+								{% if ipage <= page-1 %}	
+									<a href="{{ path('app_categorie', {'cat': categ ,'ipag': ipage+1}) }}" class="text-decoration-none">></a>&nbsp
+								{% endif %}	
+							</td>
+						{% else %}	
+							<td>
+								{% if ipage <= page-1 %}
+									{% if ipage+21 > page %}
+										{% set ipage = page %}
+									{% endif %}
+
+									<a href="{{ path('app_categorie', {'cat': categ , 'ipag': ipage}) }}" class="text-decoration-none">>></a>&nbsp
+								{% endif %}	
+							</td>
+						{% endif %}	
+					</tr>
+				</table>
+
+
 				{% if (i != 0) %}
 					<a href="{{ path('app_games_new') }}">Enregistrer un Nouveau Jeu</a>
 				{% endif %}

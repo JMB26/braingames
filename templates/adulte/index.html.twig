@@ -51,7 +51,7 @@
 
 								<td>{{ game.txt|u.truncate(15) }}...</td>
 
-								<td>{{ game.age }}</td>
+								<td>{{ game.age }}+</td>
 								<td>
 
 									{% if dispos[i]|length == 0  %}
@@ -110,32 +110,59 @@
 					</tbody>
 				</table>
 
-				{% if page > 1 %}
-					<table>
-						<tr>
-							<td>
-								{% if ipage > 1 %}
-									<a href="{{ path('app_adulte', {'ipag': ipage-1}) }}" class="text-decoration-none"><</a>&nbsp
-								{% endif %}	
-							</td>										
-							
-							{# Barre de page #}
-							{% for n in 1.. page %}
-								{% if ipage == n %}
-									<td class="fs-3 font-weight-bold">{{n}}&nbsp</td> 
-								{% else %}						
-									<td><a class="fs-5" href="{{ path('app_adulte', {'ipag': n}) }}">{{n}}</a>&nbsp</td> 								                   
-								{% endif %}	
-							{% endfor %}
+				{# Pagination #}
+				<table>
+					<tr>
 
+						{% if page <= 20 %}
 							<td>
-								{% if ipage <= page-1 %}
-									<a href="{{ path('app_adulte', {'ipag': ipage+1}) }}" class="text-decoration-none">></a>&nbsp
+								{% if ipage > 1 %}						
+									<a href="{{ path('app_home', {'ipag': ipage-1}) }}" class="text-decoration-none"><</a>&nbsp
+								{% endif %}
+							</td>
+						{% else %}	
+							<td>							
+								{% if ipage > 20 %}	
+									<a href="{{ path('app_home', {'ipag': ipage-20}) }}" class="text-decoration-none"><<</a>&nbsp
 								{% endif %}	
 							</td>
-						</tr>
-					</table>
-				{% endif %}		
+						{% endif %}											
+						
+						{# Barre de page #}
+						{% set pagefin = pagedeb + 19 %}
+
+						{% if page < pagefin %}
+							{% set pagefin = page %}
+						{% endif %}	
+
+						{% for n in pagedeb.. pagefin %}
+							{% if ipage == n %}
+								<td class="fs-3 font-weight-bold">{{n}}&nbsp</td> 
+							{% else %}						
+								<td><a class="fs-5" href="{{ path('app_home', {'ipag': n}) }}">{{n}}</a>&nbsp</td> 								                   
+							{% endif %}	
+						{% endfor %}
+
+
+						{% if page <= 20 %}
+							<td>
+								{% if ipage <= page-1 %}	
+									<a href="{{ path('app_home', {'ipag': ipage+1}) }}" class="text-decoration-none">></a>&nbsp
+								{% endif %}	
+							</td>
+						{% else %}	
+							<td>
+								{% if ipage <= page-1 %}
+									{% if ipage+21 > page %}
+										{% set ipage = page %}
+									{% endif %}
+
+									<a href="{{ path('app_home', {'ipag': ipage}) }}" class="text-decoration-none">>></a>&nbsp
+								{% endif %}	
+							</td>
+						{% endif %}	
+					</tr>
+				</table>
 
 				<a href="{{ path('app_games_new') }}">Enregistrer un Nouveau Jeu</a>
 			</div>
